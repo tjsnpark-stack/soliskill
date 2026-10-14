@@ -711,6 +711,8 @@ export default function App() {
 
 프로젝트 요건:
 ${requirement}`;
+      // 정적 배포(GitHub Pages)에는 AI 프록시 서버가 없다 → 호출하지 않고 바로 규칙 기반으로
+      if (import.meta.env.PROD) throw new Error("static build: no AI proxy");
       const res = await fetch("/api/messages", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 1500, messages: [{ role: "user", content: prompt }] }),
@@ -889,6 +891,8 @@ ${requirement}`;
           : { type: "image", source: { type: "base64", media_type: exFile.media, data: exFile.data } };
         content = [block, { type: "text", text: instruction }];
       }
+      // 정적 배포(GitHub Pages)에는 AI 프록시 서버가 없다 → 호출하지 않고 바로 규칙 기반으로
+      if (import.meta.env.PROD) throw new Error("static build: no AI proxy");
       const res = await fetch("/api/messages", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 1000, messages: [{ role: "user", content }] }),
@@ -1813,7 +1817,7 @@ ${requirement}`;
                 <path d="M0 380 C 120 320 180 470 420 410 L420 620 L0 620 Z" fill="rgba(255,255,255,.10)" />
                 <path d="M0 470 C 140 430 220 560 420 500 L420 620 L0 620 Z" fill="rgba(255,255,255,.07)" />
               </svg>
-              <img className="lb-logo" src="/solideo-logo-white.png" alt="solideo" />
+              <img className="lb-logo" src={`${import.meta.env.BASE_URL}solideo-logo-white.png`} alt="solideo" />
               <div className="lb-body">
                 <h2>SoliSkill</h2>
                 <p>팀 스킬의 모든 것,<br />한눈에 읽는 우리 조직의 지도.</p>
@@ -1860,7 +1864,7 @@ ${requirement}`;
       <div className="applayout">
         <aside className="sidebar">
           <div className="sb-brand">
-            <img className="sb-logo" src={dark ? "/solideo-logo-white.png" : "/solideo-logo.png"} alt="solideo" onError={(ev) => { ev.currentTarget.style.display = "none"; }} />
+            <img className="sb-logo" src={`${import.meta.env.BASE_URL}${dark ? "solideo-logo-white.png" : "solideo-logo.png"}`} alt="solideo" onError={(ev) => { ev.currentTarget.style.display = "none"; }} />
             <span className="sb-name">SoliSkill</span>
           </div>
           <nav className="sb-nav">
