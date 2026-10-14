@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SoliSkill 발표 화면</title>
+<style>
+@font-face{font-family:Pretendard;font-weight:400;src:local("Pretendard Regular"),url("자료/fonts/Pretendard-400.woff2") format("woff2")}
+@font-face{font-family:Pretendard;font-weight:700;src:local("Pretendard Bold"),url("자료/fonts/Pretendard-700.woff2") format("woff2")}
+@font-face{font-family:Pretendard;font-weight:800;src:local("Pretendard ExtraBold"),url("자료/fonts/Pretendard-800.woff2") format("woff2")}
+:root{
+  --p:#C4164D;--p-deep:#9E0F3D;--p-soft:#FCE7EE;
+  --teal:#0FB5AE;--teal-soft:#E2F6F4;--gold:#B8841A;--gold-soft:#FBF3DE;
+  --ink:#0E1A2E;--ink2:#3A485C;--mute:#64748B;--line:#E4E9F2;--bg:#F4F6FA;--card:#fff;
+  --dark:#0E1420;--dark2:#18202E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden}
+body{font-family:Pretendard,"Malgun Gothic",sans-serif;color:var(--ink);letter-spacing:-.02em;word-break:keep-all;cursor:default}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center;background:var(--bg);overflow:hidden}
+
+/* ── slide base ── */
+.s{position:absolute;inset:0;padding:150px 120px 110px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+.s.on{opacity:1;visibility:visible;transition:opacity .5s ease}
+.s.dark{background:var(--dark);color:#fff}
+.s.red{background:var(--p);color:#fff}
+.s [data-a]{opacity:0;transform:translateY(26px)}
+.s.on [data-a]{animation:up .7s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--d,0) * 140ms + 150ms)}
+@keyframes up{to{opacity:1;transform:none}}
+.s .top{position:absolute;left:120px;right:120px;top:40px;display:flex;align-items:center;gap:14px;font-size:20px;color:var(--mute);font-weight:700}
+.s .top img{height:26px}
+.s .top .brand{color:var(--ink);font-weight:800}
+.s .top .tag{color:var(--p)}
+.s.dark .top,.s.red .top{color:rgba(255,255,255,.6)}
+.s.dark .top .brand,.s.red .top .brand{color:#fff}
+.s .fake{position:absolute;right:120px;bottom:34px;font-size:18px;font-weight:700;color:#8A94A6}
+.s.dark .fake{color:#64748B}
+.s .num{position:absolute;bottom:34px;left:0;right:0;text-align:center;font-size:20px;font-weight:700;color:#A0AABB;font-variant-numeric:tabular-nums}
+.s.dark .num,.s.red .num{color:rgba(255,255,255,.45)}
+.s .bar{position:absolute;left:0;top:0;height:8px;background:var(--p);width:var(--bar,0)}
+.s.red .bar{background:#fff}
+.eyebrow{font-size:22px;font-weight:800;letter-spacing:.14em;color:var(--p);margin-bottom:18px}
+.s.dark .eyebrow{color:#FF6F9C}
+h1{font-size:68px;line-height:1.22;font-weight:800;letter-spacing:-.035em}
+h1 em{font-style:normal;color:var(--p)}
+.s.dark h1 em{color:#FF6F9C}
+.lead{font-size:30px;color:var(--ink2);margin-top:22px;line-height:1.55}
+.s.dark .lead{color:#C6D2E2}
+.foot{margin-top:auto;font-size:28px;font-weight:700;color:var(--ink);padding-top:26px;border-top:2px solid var(--line);display:flex;align-items:center;gap:16px}
+.foot:before{content:"";width:12px;height:12px;border-radius:50%;background:var(--p);flex:none}
+.s.dark .foot{color:#fff;border-color:#2A3546}
+.card{background:var(--card);border-radius:24px;box-shadow:0 10px 40px rgba(14,26,46,.08);border:1px solid var(--line)}
+.chip{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 20px;font-size:22px;font-weight:700}
+.shot{border-radius:18px;overflow:hidden;box-shadow:0 24px 70px rgba(14,26,46,.22);border:1px solid var(--line);background:#fff}
+.shot img{display:block;width:100%}
+.win{border-radius:16px;overflow:hidden;box-shadow:0 24px 70px rgba(14,26,46,.25);border:1px solid #d5dbe6;background:#fff}
+.win .wb{height:38px;background:#EEF1F6;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid #dde3ec}
+.win .wb i{width:12px;height:12px;border-radius:50%;background:#D4D9E2}
+.win .wb i:nth-child(1){background:#F26B6B}.win .wb i:nth-child(2){background:#F2C14E}.win .wb i:nth-child(3){background:#5BC777}
+.win .wb span{margin-left:14px;font-size:15px;color:#8892A3}
+.win img{display:block;width:100%}
+.callout{background:var(--ink);color:#fff;border-radius:18px;padding:24px 30px;font-size:27px;font-weight:700;line-height:1.5}
+.callout b{color:#FF8DB0}
+
+/* ── 01 cover ── */
+#s1{padding:0;background:radial-gradient(1200px 700px at 85% 10%,#3A1522 0,transparent 60%),radial-gradient(900px 600px at 0% 100%,#0F2E2C 0,transparent 60%),var(--dark)}
+#s1 .in{position:absolute;left:140px;top:150px;right:140px}
+#s1 .logo{height:46px;margin-bottom:60px}
+#s1 .t{font-size:170px;font-weight:800;letter-spacing:-.05em;line-height:1}
+#s1 .t span{color:#FF4F86}
+#s1 .sub{font-size:44px;font-weight:700;margin-top:30px;color:#E7EDF5}
+#s1 .pills{display:flex;gap:14px;margin-top:44px}
+#s1 .pills span{border:2px solid #3B4757;border-radius:999px;padding:12px 26px;font-size:24px;font-weight:700;color:#C6D2E2}
+#s1 .pills span:first-child{background:var(--p);border-color:var(--p);color:#fff}
+#s1 .who{position:absolute;right:140px;top:160px;text-align:right;font-size:26px;color:#94A3B8;line-height:1.6}
+#s1 .who b{display:block;font-size:34px;color:#fff}
+#s1 .order{position:absolute;left:140px;right:140px;bottom:110px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+#s1 .order div{border-top:3px solid #2A3546;padding-top:20px;font-size:22px;color:#94A3B8;line-height:1.5}
+#s1 .order div:first-child{border-color:#FF4F86}
+#s1 .order b{display:block;font-size:30px;color:#fff;margin-top:6px}
+#s1 .order em{font-style:normal;font-weight:800;color:#FF6F9C;font-variant-numeric:tabular-nums}
+
+/* ── 02 problem ── */
+.ask{display:flex;align-items:center;gap:22px;margin:50px 0 46px}
+.ask .q{background:var(--p);color:#fff;font-size:34px;font-weight:800;border-radius:28px 28px 28px 6px;padding:26px 36px}
+.ask .arr{font-size:40px;color:#B6C0CF;font-weight:800}
+.ask .pm{background:#fff;border:2px solid var(--line);border-radius:22px;padding:18px 26px;font-size:24px;color:var(--ink2);line-height:1.4}
+.ask .pm b{display:block;color:var(--ink);font-size:28px}
+.ask .more{font-size:30px;font-weight:800;color:var(--mute);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.35}}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.three .card{padding:44px 40px 50px}
+.three .n{font-size:22px;font-weight:800;color:var(--p)}
+.three h3{font-size:40px;margin:12px 0 16px}
+.three p{font-size:26px;color:var(--ink2);line-height:1.55}
+
+/* ── 03 cause table ── */
+.tbl{margin-top:44px;border-radius:24px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 10px 40px rgba(14,26,46,.07)}
+.tbl .r{display:grid;grid-template-columns:1fr 90px 1.15fr;align-items:center;border-top:1px solid var(--line);padding:22px 40px;font-size:29px}
+.tbl .r:first-child{border-top:0;background:var(--ink);color:#fff;font-size:21px;font-weight:800;letter-spacing:.08em;padding:16px 40px}
+.tbl .r .x{color:var(--ink2)}
+.tbl .r .ar{color:var(--p);font-weight:800;text-align:center;font-size:30px}
+.tbl .r .o{font-weight:800}
+.tbl .r .o small{display:block;font-size:20px;color:var(--mute);font-weight:700;margin-top:4px}
+.tbl .r.hl{background:var(--p-soft)}
+
+/* ── 04 flow ── */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:60px;margin-top:70px;position:relative}
+.flow .card{padding:44px 36px 48px;position:relative;min-height:400px}
+.flow .card:after{content:"→";position:absolute;right:-30px;top:50%;transform:translate(50%,-50%);font-size:38px;font-weight:800;color:#B6C0CF;z-index:2}
+.flow .card:last-child:after{display:none}
+.flow .k{font-size:76px;font-weight:800;color:var(--p);line-height:1}
+.flow h3{font-size:46px;margin:16px 0 14px}
+.flow p{font-size:24px;color:var(--ink2);line-height:1.55}
+.flow .card.last{background:var(--ink);color:#fff;border-color:var(--ink)}
+.flow .card.last .k{color:#FF6F9C}.flow .card.last p{color:#C6D2E2}
+.loop{margin-top:34px;text-align:right;font-size:26px;font-weight:700;color:var(--mute)}
+.loop b{color:var(--p)}
+
+/* ── 05 features ── */
+.feat{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:24px;margin-top:46px;flex:1}
+.feat .card{padding:32px 34px;display:flex;flex-direction:column}
+.feat .card .h{display:flex;align-items:baseline;justify-content:space-between}
+.feat h3{font-size:34px}
+.feat .c{font-size:48px;font-weight:800;color:var(--p);font-variant-numeric:tabular-nums}
+.feat .c small{font-size:22px;margin-left:2px}
+.feat p{font-size:22px;color:var(--ink2);line-height:1.6;margin-top:12px}
+.feat .card.key{background:var(--ink);color:#fff;border-color:var(--ink)}
+.feat .card.key p{color:#C6D2E2}.feat .card.key .c{color:#FF6F9C}
+.feat .card.key .star{display:inline-block;background:var(--p);color:#fff;font-size:18px;border-radius:8px;padding:3px 10px;margin-left:10px;vertical-align:middle}
+
+/* ── 06 match ── */
+.two{display:grid;grid-template-columns:690px 1fr;gap:60px;margin-top:40px;flex:1;align-items:start}
+.qbox{background:#fff;border:2px solid var(--line);border-radius:22px;padding:28px 30px}
+.qbox .lb{font-size:19px;font-weight:800;color:var(--mute);margin-bottom:12px}
+.qbox .cp{display:inline-block;background:var(--p);color:#fff;font-weight:800;border-radius:999px;padding:6px 18px;font-size:22px}
+.qbox .tx{margin-top:22px;border:2px solid var(--line);border-radius:14px;padding:18px 20px;font-size:27px;font-weight:700}
+.qbox .bt{display:inline-block;margin-top:20px;background:var(--p);color:#fff;font-size:22px;font-weight:800;border-radius:12px;padding:12px 24px}
+.pts{list-style:none;margin-top:30px}
+.pts li{font-size:27px;line-height:1.5;padding:14px 0 14px 44px;position:relative;border-bottom:1px solid var(--line)}
+.pts li:before{content:"";position:absolute;left:8px;top:26px;width:14px;height:14px;border-radius:50%;background:var(--p)}
+.pts li b{color:var(--p)}
+
+/* ── 07 formula ── */
+.fx{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:44px}
+.fx .card{padding:40px 44px}
+.fx .lb{font-size:22px;font-weight:800;color:var(--mute);letter-spacing:.08em}
+.fx .eq{font-size:56px;font-weight:800;margin:18px 0 26px}
+.fx .eq em{font-style:normal;color:var(--p)}
+.lv{display:grid;grid-template-columns:80px 1fr 70px;align-items:center;gap:16px;font-size:23px;margin:9px 0;font-weight:700}
+.lv i{display:block;height:20px;border-radius:10px;background:linear-gradient(90deg,var(--p),#F0417A)}
+.lv span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.fx .side{font-size:23px;color:var(--ink2);margin-top:22px;line-height:1.6}
+.ex .row{display:flex;justify-content:space-between;align-items:center;font-size:30px;padding:16px 0;border-bottom:1px solid var(--line)}
+.ex .row b{font-size:38px;font-variant-numeric:tabular-nums}
+.ex .tot{display:flex;align-items:baseline;justify-content:space-between;margin-top:22px}
+.ex .tot span{font-size:30px;color:var(--ink2);font-weight:700}
+.ex .tot b{font-size:120px;font-weight:800;color:var(--p);line-height:1}
+.band{margin-top:30px;background:var(--p-soft);border-radius:18px;padding:22px 32px;font-size:26px;font-weight:700;color:var(--p-deep);display:flex;gap:18px;align-items:center}
+.band b{background:var(--p);color:#fff;border-radius:10px;padding:4px 12px;font-size:21px;flex:none}
+
+/* ── 08/10/11 shots ── */
+.sx{display:grid;grid-template-columns:1fr 1060px;gap:56px;margin-top:-20px;align-items:start}
+.legend{display:flex;flex-direction:column;gap:18px;margin-top:34px}
+.legend div{display:flex;align-items:center;gap:18px;font-size:28px;font-weight:700}
+.legend i{width:22px;height:22px;border-radius:50%;flex:none}
+.legend small{font-size:21px;color:var(--mute);font-weight:400;margin-left:auto}
+.stat{display:flex;gap:20px;margin-top:40px}
+.stat div{flex:1;background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px;font-size:20px;color:var(--mute);font-weight:700}
+.stat b{display:block;font-size:52px;color:var(--ink);font-variant-numeric:tabular-nums}
+.ba{display:flex;align-items:center;gap:22px;margin-top:34px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px 30px}
+.ba .who{font-size:23px;color:var(--mute);font-weight:700;line-height:1.4}
+.ba .who b{display:block;color:var(--ink);font-size:28px}
+.ba .v{font-size:46px;font-weight:800;font-variant-numeric:tabular-nums;margin-left:auto}
+.ba .v s{color:#A0AABB;text-decoration:none}
+.ba .v em{font-style:normal;color:#1F9D55}
+.crop{height:640px;overflow:hidden;position:relative}
+.crop img{position:absolute;left:0;width:100%}
+
+/* ── 09 eval ── */
+.steps{list-style:none;counter-reset:n;margin-top:36px}
+.steps li{counter-increment:n;display:flex;gap:20px;align-items:center;font-size:28px;font-weight:700;padding:18px 0}
+.steps li:before{content:counter(n);width:50px;height:50px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:24px;flex:none}
+.steps li.p:before{background:var(--p)}
+.zoom{transform:scale(1.62);transform-origin:0 0;width:572px}
+
+/* ── 12 trust ── */
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:60px}
+.four .card{padding:40px 32px 44px}
+.four .ic{width:76px;height:76px;border-radius:20px;background:var(--p-soft);display:grid;place-items:center;font-size:40px}
+.four h3{font-size:31px;margin:26px 0 14px;line-height:1.3}
+.four p{font-size:22px;color:var(--ink2);line-height:1.6}
+
+/* ── 13 demo ── */
+#s13 .big{font-size:120px;font-weight:800;letter-spacing:-.04em;margin-top:24px;line-height:1.1}
+#s13 .big em{font-style:normal;color:#FF4F86}
+#s13 .scen{margin-top:50px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+#s13 .scen div{background:var(--dark2);border:1px solid #2A3546;border-radius:22px;padding:30px 34px;font-size:23px;color:#94A3B8;line-height:1.6}
+#s13 .scen b{display:block;color:#fff;font-size:34px;margin:4px 0 8px}
+#s13 .scen em{font-style:normal;color:#FF6F9C;font-weight:800}
+#s13 .hint{margin-top:auto;font-size:24px;color:#64748B}
+#s13 .hint b{color:#C6D2E2}
+
+/* ── 14 effect ── */
+.eff{display:grid;grid-template-columns:1.25fr 1fr;gap:34px;margin-top:44px;flex:1}
+.eff .card{padding:40px 44px}
+.eff h3{font-size:24px;letter-spacing:.1em;color:var(--mute);margin-bottom:12px}
+.eff ol{list-style:none}
+.eff li{display:flex;gap:22px;padding:20px 0;border-bottom:1px solid var(--line);font-size:28px;line-height:1.45}
+.eff li:last-child{border:0}
+.eff li b{color:var(--p);font-size:26px;flex:none;width:44px}
+.eff li span small{display:block;font-size:21px;color:var(--mute);margin-top:4px}
+.eff .nx{background:var(--ink);color:#fff;border-color:var(--ink)}
+.eff .nx h3{color:#FF6F9C}
+.eff .nx li{border-color:#2A3546;color:#E7EDF5}
+.eff .nx li b{color:#FF6F9C}
+
+.eff4{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:26px;margin-top:44px;flex:1}
+.eff4 .card{padding:40px 46px;display:flex;flex-direction:column;justify-content:center}
+.eff4 b{font-size:30px;font-weight:800;color:var(--p)}
+.eff4 h3{font-size:42px;margin:12px 0 14px}
+.eff4 p{font-size:26px;color:var(--ink2);line-height:1.5}
+
+/* ── 15 close ── */
+#s15 .c{margin:auto 0;font-size:96px;font-weight:800;line-height:1.25;letter-spacing:-.04em}
+#s15 .by{font-size:30px;font-weight:700;opacity:.85}
+
+/* ── 16 Q&A ── */
+
+/* ── overlays ── */
+#vwrap{position:absolute;inset:0;background:#000;display:none;z-index:20}
+#vwrap.on{display:block}
+#vwrap video{width:100%;height:100%;object-fit:contain;background:#000}
+#pause,#timer,#start{position:absolute;z-index:30;font-family:inherit}
+#pause{right:40px;top:30px;background:rgba(14,20,32,.85);color:#fff;font-size:22px;font-weight:700;border-radius:12px;padding:10px 18px;display:none}
+#timer{right:40px;bottom:30px;background:rgba(14,20,32,.85);color:#fff;font-size:30px;font-weight:800;border-radius:12px;padding:8px 16px;display:none;font-variant-numeric:tabular-nums}
+#timer small{font-size:16px;color:#94A3B8;margin-left:8px;font-weight:700}
+#start{left:0;right:0;bottom:0;padding:16px;text-align:center;background:rgba(14,20,32,.88);color:#C6D2E2;font-size:20px}
+#start b{color:#fff}
+body.linked #start{display:none}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 01 표지 -->
+<section class="s dark" id="s1">
+  <div class="in">
+    <img class="logo" src="자료/img/solideo-logo-white.png" alt="solideo" data-a>
+    <div class="t" data-a style="--d:1">Soli<span>Skill</span></div>
+    <div class="sub" data-a style="--d:2">프로젝트는 수시로 바뀌어도, 적합한 인력은 바로 찾는다</div>
+    <div class="pills" data-a style="--d:3"><span>AI 인력 매칭</span><span>가용 인력 현황</span><span>원클릭 배치</span><span>역량 자동 갱신</span></div>
+  </div>
+  <div class="who" data-a style="--d:2">팀 스카이콩콩<b>박선우 · 윤승미</b></div>
+  <div class="order" data-a style="--d:4">
+    <div><em>01 · 4분 57초</em><b>문제와 해법</b>장표로 설명</div>
+    <div><em>02 · 6분</em><b>라이브 시연</b>연계 작업 담당자 찾기</div>
+    <div><em>03 · 47초</em><b>기대효과 · 마무리</b>정리하며 마치기</div>
+      </div>
+  <div class="num">01</div>
+</section>
+
+<!-- 02 문제 -->
+<section class="s" id="s2" style="--bar:12%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">개발 배경 · 문제</span></div>
+  <div class="eyebrow" data-a>WHY WE BUILT THIS</div>
+  <h1 data-a style="--d:1">프로젝트는 수시로 바뀌는데,<br>인력 배치는 <em>매번 PM에게 물어보기</em></h1>
+  <div class="ask" data-a style="--d:2">
+    <div class="q">“연계 작업에 특화된 사람 누구지?”</div>
+    <div class="arr">→</div><div class="pm"><b>PM A</b>“우리 팀엔 없는데…”</div>
+    <div class="arr">→</div><div class="pm"><b>PM B</b>“C 프로젝트에 있을걸요?”</div>
+    <div class="arr">→</div><div class="more">계속 물어보기…</div>
+  </div>
+  <div class="three">
+    <div class="card" data-a style="--d:3"><div class="n">01</div><h3>수시로 시작·종료</h3><p>프로젝트가 열릴 때마다<br>인력 탐색을 처음부터 다시 합니다.</p></div>
+    <div class="card" data-a style="--d:4"><div class="n">02</div><h3>현장·고객사에 분산</h3><p>인력이 흩어져 있어 관리자조차<br>전체 역량을 파악하기 어렵습니다.</p></div>
+    <div class="card" data-a style="--d:5"><div class="n">03</div><h3>프로젝트마다 반복</h3><p>찾은 결과가 기록에 남지 않아<br>다음에도 같은 수소문을 합니다.</p></div>
+  </div>
+  <div class="num">02</div>
+</section>
+
+<!-- 03 원인 → 해결 -->
+<section class="s" id="s3" style="--bar:19%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">원인 → 해결</span></div>
+  <div class="eyebrow" data-a>ROOT CAUSE</div>
+  <h1 data-a style="--d:1">원인은 하나, <em>함께 보는 객관적인 자료</em>가 없어서입니다</h1>
+  <div class="tbl" data-a style="--d:2">
+    <div class="r"><span>지금의 원인</span><span></span><span>SOLISKILL의 해결</span></div>
+    <div class="r"><span class="x">통합된 역량 문서가 없다</span><span class="ar">→</span><span class="o">252명을 같은 양식으로 한곳에<small>역량 인벤토리 · 숙련도 Lv1~5 · 근거 출처</small></span></div>
+    <div class="r hl"><span class="x">리더마다 판단 기준이 다르다</span><span class="ar">→</span><span class="o">누구에게나 같은 공식<small>적합도 계산 기준을 화면에 공개</small></span></div>
+    <div class="r"><span class="x">사람을 찾으려면 수소문해야 한다</span><span class="ar">→</span><span class="o">검색 한 번<small>AI 인력 매칭 · 문장으로 찾기</small></span></div>
+    <div class="r"><span class="x">누가 지금 투입 중인지 모른다</span><span class="ar">→</span><span class="o">조직도에서 바로 확인<small>가용 · 투입 · 풀로드 상태</small></span></div>
+    <div class="r"><span class="x">끝난 프로젝트가 기록에 남지 않는다</span><span class="ar">→</span><span class="o">완료하면 역량이 자동 갱신<small>참여자 사용 기술 Lv +1</small></span></div>
+  </div>
+  <div class="num">03</div>
+</section>
+
+<!-- 04 해법 흐름 -->
+<section class="s" id="s4" style="--bar:25%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">해법</span></div>
+  <div class="eyebrow" data-a>ONE FLOW</div>
+  <h1 data-a style="--d:1">인력 배치를 <em>하나의 흐름</em>으로</h1>
+  <div class="flow">
+    <div class="card" data-a style="--d:2"><div class="k">01</div><h3>찾기</h3><p>필요 역량이나 문장으로 검색하면<br>AI가 적합도 순으로 추천</p></div>
+    <div class="card" data-a style="--d:3"><div class="k">02</div><h3>확인</h3><p>추천 이유·계산식·근거 이력,<br>조직도에서 지금 투입 가능 여부</p></div>
+    <div class="card" data-a style="--d:4"><div class="k">03</div><h3>배치</h3><p>버튼 한 번에 프로젝트 생성,<br>배치 전 조합 평가로 리스크 점검</p></div>
+    <div class="card last" data-a style="--d:5"><div class="k">04</div><h3>갱신</h3><p>완료하는 순간 참여자 역량이<br>자동으로 한 단계 성장</p></div>
+  </div>
+  <div class="loop" data-a style="--d:6">↻ 갱신된 역량으로 <b>다음 배치가 더 정확해집니다</b></div>
+  <div class="num">04</div>
+</section>
+
+<!-- 05 기능 한눈에 -->
+<section class="s" id="s5" style="--bar:31%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">기능 한눈에</span></div>
+  <div class="eyebrow" data-a>4 MENUS · 45 FEATURES</div>
+  <h1 data-a style="--d:1">4개 메뉴, <em>45가지 기능</em>이 하나의 흐름으로</h1>
+  <div class="feat">
+    <div class="card key" data-a style="--d:2"><div class="h"><h3>AI 인력 매칭<span class="star">핵심</span></h3><div class="c">12<small>개</small></div></div><p>문장으로 찾기 · 추천 이유 · 가용 배지<br>카드별 계산식 · 기준 공개·조정 · 익명 ID</p></div>
+    <div class="card" data-a style="--d:3"><div class="h"><h3>배치 · 운영</h3><div class="c">9<small>개</small></div></div><p>원클릭 프로젝트 생성 · 조합 평가<br>단일 의존 경고 · 칸반 5단계 · 자동 성장</p></div>
+    <div class="card" data-a style="--d:4"><div class="h"><h3>조직도</h3><div class="c">4<small>개</small></div></div><p>실제 조직 트리(정직원 252 · 협력 79)<br>가용·투입·풀로드 상태 · 검색</p></div>
+    <div class="card" data-a style="--d:5"><div class="h"><h3>조직 역량</h3><div class="c">8<small>개</small></div></div><p>분야·강점 분포 · 인사이트 한 줄<br>부서 필터 · 이력서 자동 채우기</p></div>
+    <div class="card" data-a style="--d:6"><div class="h"><h3>마이페이지</h3><div class="c">5<small>개</small></div></div><p>숙련도와 근거 · 포트폴리오<br>역량 개발 기록 · 공개 스위치</p></div>
+    <div class="card" data-a style="--d:7"><div class="h"><h3>로그인 · 권한</h3><div class="c">7<small>개</small></div></div><p>역할별 로그인 · 직원은 본인만<br>관리자 전용 기능 · 다크 모드</p></div>
+  </div>
+  <div class="num">05</div>
+</section>
+
+<!-- 06 AI 인력 매칭 -->
+<section class="s" id="s6" style="--bar:37%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">01 찾기 · AI 인력 매칭</span></div>
+  <div class="eyebrow" data-a>01 FIND</div>
+  <h1 data-a style="--d:1">필요한 사람을 <em>문장으로 검색</em>합니다</h1>
+  <div class="two">
+    <div>
+      <div class="qbox" data-a style="--d:2"><div class="lb">필요 역량</div><span class="cp">전자정부 ✕</span><div class="tx">연계 작업에 특화된 사람이 필요해요</div><span class="bt">적합 인원 찾기</span></div>
+      <ul class="pts" data-a style="--d:3">
+        <li>252명 중 1순위 <b>김은태 책임</b> — 시스템 연계 <b>Lv.5</b></li>
+        <li>점수만이 아니라 <b>왜 이 사람인지</b> 이유까지</li>
+        <li>지금 <b>바로 합류 가능</b>한지 가용 배지로</li>
+      </ul>
+    </div>
+    <div>
+      <div class="shot" data-a style="--d:3"><img src="자료/img/match-cards.png" alt="AI 인력 매칭 결과"></div>
+      <div class="callout" data-a style="--d:5;margin-top:26px">여러 PM에게 일일이 확인하던 과정을 <b>한 번의 검색</b>으로</div>
+    </div>
+  </div>
+  <div class="fake">※ 화면 속 직원 역량은 시연용 가상 데이터입니다</div><div class="num">06</div>
+</section>
+
+<!-- 07 적합도 기준 -->
+<section class="s" id="s7" style="--bar:44%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">적합도 기준 · 공개 · 조정 가능</span></div>
+  <div class="eyebrow" data-a>OPEN FORMULA</div>
+  <h1 data-a style="--d:1">96점은 어디서 나왔을까요? <em>기준을 공개합니다</em></h1>
+  <div class="fx">
+    <div class="card" data-a style="--d:2">
+      <div class="lb">공식 · 모든 직원에게 같은 기준</div>
+      <div class="eq">보유 기술 = <em>60 + 숙련도 × 8</em></div>
+      <div class="lv"><span>Lv.1</span><i style="width:68%"></i><span>68</span></div>
+      <div class="lv"><span>Lv.2</span><i style="width:76%"></i><span>76</span></div>
+      <div class="lv"><span>Lv.3</span><i style="width:84%"></i><span>84</span></div>
+      <div class="lv"><span>Lv.4</span><i style="width:92%"></i><span>92</span></div>
+      <div class="lv"><span>Lv.5</span><i style="width:100%"></i><span>100</span></div>
+      <div class="side">강점 일치 <b>100</b> · 미보유 <b>0</b> → 요구 항목의 <b>평균</b></div>
+    </div>
+    <div class="card ex" data-a style="--d:3">
+      <div class="lb">예시 · 김은태 책임</div>
+      <div class="row"><span>전자정부 Lv.4</span><b>92</b></div>
+      <div class="row"><span>시스템 연계 Lv.5</span><b>100</b></div>
+      <div class="tot"><span>(92 + 100) ÷ 2 =</span><b>96</b></div>
+    </div>
+  </div>
+  <div class="band" data-a style="--d:4"><b>초기값</b>60·8은 팀이 정한 값 — 조직이 합의하면 관리자가 화면에서 바꾸고, 모든 점수가 즉시 다시 계산됩니다 (예: 40·12 → 96점이 94점)</div>
+  <div class="fake">※ 화면 속 직원 역량은 시연용 가상 데이터입니다</div><div class="num">07</div>
+</section>
+
+<!-- 08 조직도 -->
+<section class="s" id="s8" style="--bar:50%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">02 확인 · 조직도</span></div>
+  <div class="sx">
+    <div>
+      <div class="eyebrow" data-a>02 CHECK</div>
+      <h1 data-a style="--d:1">투입 가능 여부,<br><em>조직도에서 바로 확인</em></h1>
+      <div class="legend" data-a style="--d:2">
+        <div><i style="background:#1F9D55"></i>가용<small>지금 합류 가능</small></div>
+        <div><i style="background:#D97706"></i>투입<small>진행·검토 1건</small></div>
+        <div><i style="background:#DC2626"></i>풀로드<small>2건 이상</small></div>
+      </div>
+      <div class="stat" data-a style="--d:3"><div><b>252</b>정직원</div><div><b>79</b>협력</div></div>
+    </div>
+    <div class="win" data-a style="--d:2"><div class="wb"><i></i><i></i><i></i><span>SoliSkill · 조직도 · 현재 배치 현황</span></div><div class="crop" style="height:654px"><img src="자료/img/org.png" alt="조직도" style="width:1805px;left:-496px;top:-68px"></div></div>
+  </div>
+  <div class="fake">※ 화면 속 직원 역량은 시연용 가상 데이터입니다</div><div class="num">08</div>
+</section>
+
+<!-- 09 조합 평가 -->
+<section class="s" id="s9" style="--bar:56%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">03 배치 · 조합 평가</span></div>
+  <div class="eyebrow" data-a>03 ASSIGN</div>
+  <h1 data-a style="--d:1">버튼 한 번에 배치, <em>배치 전에 리스크 점검</em></h1>
+  <div class="two" style="grid-template-columns:760px 1fr">
+    <div>
+      <ol class="steps" data-a style="--d:2">
+        <li>“이 3명으로 프로젝트 만들기”</li>
+        <li>인원·기술이 채워진 채로 열림</li>
+        <li class="p">이 조합 평가하기</li>
+      </ol>
+      <div class="callout" data-a style="--d:4">기술은 다 갖췄지만 <b>Java는 김은태 1명뿐</b><br>→ 이탈 리스크로 미리 경고합니다</div>
+    </div>
+    <div data-a style="--d:3"><div class="zoom"><div class="shot"><img src="자료/img/eval.png" alt="조합 평가"></div></div></div>
+  </div>
+  <div class="fake">※ 화면 속 직원 역량은 시연용 가상 데이터입니다</div><div class="num">09</div>
+</section>
+
+<!-- 10 자동 갱신 -->
+<section class="s" id="s10" style="--bar:62%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">04 갱신 · 자동 역량 갱신</span></div>
+  <div class="sx">
+    <div>
+      <div class="eyebrow" data-a>04 GROW</div>
+      <h1 data-a style="--d:1"><em>완료로 옮기는 순간,</em><br>역량이 자랍니다</h1>
+      <p class="lead" data-a style="--d:2">참여자의 사용 기술이 자동으로 한 단계.<br>아무도 이력서를 고치지 않아도 <b>항상 최신</b>.</p>
+      <div class="ba" data-a style="--d:3"><div class="who"><b>신민경 책임</b>시스템 연계</div><div class="v"><s>Lv.4</s> → <em>Lv.5</em></div></div>
+      <div class="ba" data-a style="--d:4"><div class="who"><b>다음 매칭</b>적합도</div><div class="v"><s>96</s> → <em>100</em></div></div>
+    </div>
+    <div class="win" data-a style="--d:2"><div class="wb"><i></i><i></i><i></i><span>SoliSkill · 프로젝트 보드</span></div><div class="crop" style="height:530px"><img src="자료/img/board-toast.png" alt="완료 시 성장 알림" style="width:1805px;left:-496px;top:-451px"></div></div>
+  </div>
+  <div class="fake">※ 화면 속 직원 역량은 시연용 가상 데이터입니다</div><div class="num">10</div>
+</section>
+
+<!-- 11 조직 역량 -->
+<section class="s" id="s11" style="--bar:69%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">조직 역량 분포 · 인사이트</span></div>
+  <div class="sx">
+    <div>
+      <div class="eyebrow" data-a>ORG MAP</div>
+      <h1 data-a style="--d:1">개인 역량이 모여<br><em>조직 현황</em>이 됩니다</h1>
+      <p class="lead" data-a style="--d:2">분야·강점별 분포를 한눈에 보고,<br>가장 얇은 분야를 짚어 줍니다.</p>
+      <div class="callout" data-a style="--d:3;margin-top:34px">중부지사 데이터 <b>1명</b> → 보강 검토<br><span style="font-weight:400;color:#C6D2E2;font-size:23px">채용·교육 계획의 근거가 됩니다</span></div>
+    </div>
+    <div class="win" data-a style="--d:2"><div class="wb"><i></i><i></i><i></i><span>SoliSkill · 조직 역량</span></div><div class="crop" style="height:541px"><img src="자료/img/insight.png" alt="조직 역량 분포" style="width:1731px;left:-454px;top:-216px"></div></div>
+  </div>
+  <div class="fake">※ 화면 속 직원 역량은 시연용 가상 데이터입니다</div><div class="num">11</div>
+</section>
+
+<!-- 12 신뢰 -->
+<section class="s" id="s12" style="--bar:75%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">신뢰</span></div>
+  <div class="eyebrow" data-a>TRUST</div>
+  <h1 data-a style="--d:1">역량은 민감한 정보라서 <em>이렇게 보호합니다</em></h1>
+  <div class="four">
+    <div class="card" data-a style="--d:2"><div class="ic">🔒</div><h3>AI에는<br>익명 번호만</h3><p>이름·연락처 대신 요청마다 바뀌는 일회용 ID와 역량만 보냅니다.</p></div>
+    <div class="card" data-a style="--d:3"><div class="ic">👤</div><h3>직원은<br>본인 정보만</h3><p>직원은 자기 역량과 참여 프로젝트만, 관리자·PM은 조직 전체를 봅니다.</p></div>
+    <div class="card" data-a style="--d:4"><div class="ic">🔑</div><h3>공개 여부는<br>본인만</h3><p>내 역량을 공개할지 말지는 본인만 바꿀 수 있습니다.</p></div>
+    <div class="card" data-a style="--d:5"><div class="ic">⚡</div><h3>AI가 없어도<br>멈추지 않음</h3><p>AI를 못 쓰면 규칙 기반으로 자동 전환하고, 배지로 구분합니다.</p></div>
+  </div>
+  <div class="band" data-a style="--d:6;margin-top:40px"><b>공정성</b>AI 모드에서도 점수는 공개된 같은 공식으로 계산 — AI는 후보와 추천 이유만 제안합니다</div>
+  <div class="num">12</div>
+</section>
+
+<!-- 13 라이브 시연 -->
+<section class="s dark" id="s13" style="--bar:81%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo-white.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag" style="color:#FF6F9C">라이브 시연</span></div>
+  <div class="eyebrow" data-a>LIVE DEMO · 6 MIN</div>
+  <div class="big" data-a style="--d:1">실제로<br><em>보여드리겠습니다</em></div>
+  <div class="scen">
+    <div data-a style="--d:2"><em>① 메인 스토리 · 3분 30초</em><b>연계 작업 담당자 찾기</b>찾기 → 기준 확인 → 조직도 → 원클릭 배치 → 완료 → 성장</div>
+    <div data-a style="--d:3"><em>② 기능 투어 · 2분 30초</em><b>그 밖의 주요 기능</b>지사 보드 · 마이페이지 · 조직 역량 · 이력서 자동 채우기 · 직원 화면</div>
+  </div>
+  <div class="hint" data-a style="--d:4">▶ 이 화면을 <b>클릭(또는 Enter)</b>하면 백업 시연 영상이 재생됩니다 · 라이브 시연 후에는 <b>→</b> 로 다음 장표</div>
+  <div class="fake">※ 화면 속 직원 역량은 시연용 가상 데이터입니다</div><div class="num">13</div>
+</section>
+
+<!-- 14 기대효과 -->
+<section class="s" id="s14" style="--bar:90%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">기대효과</span></div>
+  <div class="eyebrow" data-a>IMPACT</div>
+  <h1 data-a style="--d:1">찾고, 확인하고, 배치하고, <em>끝나면 자동으로 갱신</em></h1>
+  <div class="eff4">
+    <div class="card" data-a style="--d:2"><b>01</b><h3>인력 탐색의 시간과 노력 감소</h3><p>프로젝트마다 반복되던 수소문을 검색 한 번으로</p></div>
+    <div class="card" data-a style="--d:3"><b>02</b><h3>같은 근거로 객관적인 배치</h3><p>숙련도 · 검증 이력 · 가용성, 공개된 같은 공식</p></div>
+    <div class="card" data-a style="--d:4"><b>03</b><h3>효율적인 인력 운영</h3><p>누가 바쁘고 누가 여유 있는지 한눈에</p></div>
+    <div class="card" data-a style="--d:5"><b>04</b><h3>배치 리스크 사전 대비</h3><p>한 명에게만 의존하는 기술을 미리 경고</p></div>
+  </div>
+  <div class="num">14</div>
+</section>
+
+<!-- 15 마무리 -->
+<section class="s red" id="s15" style="--bar:100%"><div class="bar"></div>
+  <div class="top"><img src="자료/img/solideo-logo-white.png" alt=""><span class="brand">SoliSkill</span>·<span>마무리</span></div>
+  <div class="c" data-a style="--d:1">프로젝트는 수시로 바뀌어도,<br>적합한 인력은 바로 찾습니다.</div>
+  <div class="by" data-a style="--d:3">팀 스카이콩콩 · 박선우 · 윤승미 — 감사합니다</div>
+  <div class="num">15</div>
+</section>
+
+<div id="vwrap"><video id="vid" preload="auto" playsinline muted></video></div>
+<div id="pause">❚❚ 일시정지 — Space로 계속</div>
+<div id="timer"></div>
+<div id="start"><b>Space</b> 또는 <b>클릭</b>으로 시작 · ←/→ 장표 이동 · <b>F</b> 전체 화면 · <b>T</b> 타이머 · 대본 창에서 열었다면 대본의 ▶ 시작을 누르세요</div>
+</div>
+
+<script>
+// 장표 시작 시각(전체 타임라인 기준, 초). 대본(2_…html)의 시간표와 같은 값.
+const STARTS=[0,15,50,80,100,120,155,190,205,225,250,265,285,657,692];
+const DEMO=12, DEMO_END=297, AFTER_DEMO=657, END=704;
+const VIDEO='자료/영상_시연_백업.webm';
+const $=id=>document.getElementById(id);
+const slides=[...document.querySelectorAll('.s')];
+const stage=$('stage'), vid=$('vid'), vwrap=$('vwrap');
+let cur=-1, playing=false, T=0, t0=0, linked=false, lastRemote=-1, remoteClock='';
+
+function fit(){const k=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`translate(-50%,-50%) scale(${k})`}
+addEventListener('resize',fit);fit();
+
+function show(i){i=Math.max(0,Math.min(slides.length-1,i));if(i===cur)return;
+  slides.forEach((s,k)=>s.classList.toggle('on',k===i));cur=i;
+  if(i!==DEMO)stopVideo(false)}
+const fmt=s=>{s=Math.max(0,Math.floor(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const now=()=>playing?T+(performance.now()-t0)/1000:T;
+function setPlay(p){if(p===playing)return;if(p){t0=performance.now()}else{T=now()}playing=p;$('pause').style.display=(!p&&T>0&&!linked)?'block':'none';$('start').style.display=(p||linked)?'none':'block'}
+function slideAt(t){let i=0;STARTS.forEach((s,k)=>{if(t>=s)i=k});return i}
+function jump(i){i=Math.max(0,Math.min(slides.length-1,i));T=STARTS[i];t0=performance.now();show(i)}
+
+// 대본과 연결된 상태: 대본이 보낸 {단계, 경과 시간, 재생 여부, 시간표}로 장표를 직접 계산한다.
+// → 대본 창이 가려져 느려져도 장표는 제시간에 넘어간다. 계산된 장표가 바뀔 때만 따라가므로 그 사이 수동 이동도 허용.
+let rs=null;
+function remoteSlide(){const t=rs.t+(rs.playing?(performance.now()-rs.at)/1000:0);let s=-1,first=-1;
+  rs.sched.forEach(([p,st,sl])=>{if(p!==rs.ph)return;if(first<0)first=sl;if(st<=t)s=sl});
+  remoteClock=fmt(rs.off+t)+'<small>'+rs.name+'</small>';return s<0?first:s}
+
+// 시연 장표: 시간이 DEMO_END를 넘어도 자동으로 넘어가지 않고 대기
+function tick(){
+  if(linked&&rs){const s=remoteSlide();if(s!==lastRemote){lastRemote=s;show(s)}}
+  else if(!linked&&playing){let t=now();
+    if(cur===DEMO&&t>=DEMO_END&&!vwrap.classList.contains('on')){T=DEMO_END;t0=performance.now();t=DEMO_END}
+    if(t>=END){setPlay(false)}
+    const i=slideAt(t);if(i!==cur)show(i)}
+  $('timer').innerHTML=linked?remoteClock:(fmt(now())+'<small>장표 '+String(cur+1).padStart(2,'0')+'</small>');
+  requestAnimationFrame(tick)}
+
+function playVideo(){vwrap.classList.add('on');if(!vid.getAttribute('src'))vid.src=encodeURI(VIDEO);
+  vid.onerror=()=>{vwrap.classList.remove('on');alert(VIDEO+' 파일을 찾지 못했습니다. 자료 폴더를 확인하세요.')};
+  vid.currentTime=0;vid.play().catch(()=>{});
+  tell({type:'video',on:true})}
+function stopVideo(next){if(!vwrap.classList.contains('on'))return;vid.pause();vwrap.classList.remove('on');
+  tell({type:'video',on:false,next});
+  if(next&&!linked){jump(DEMO+1);setPlay(true)}else if(next)show(DEMO+1)}
+vid.onended=()=>stopVideo(true);
+
+function toggle(){
+  if(vwrap.classList.contains('on')){vid.paused?vid.play():vid.pause();return}
+  if(linked)return;setPlay(!playing)}
+addEventListener('keydown',e=>{const k=e.key;
+  if(k===' '){e.preventDefault();toggle()}
+  else if(k==='Enter'){e.preventDefault();if(cur===DEMO&&!vwrap.classList.contains('on'))playVideo()}
+  else if(k==='ArrowRight'||k==='PageDown'||k==='ArrowDown'){e.preventDefault();if(vwrap.classList.contains('on'))stopVideo(true);else jump(cur+1)}
+  else if(k==='ArrowLeft'||k==='PageUp'||k==='ArrowUp'){e.preventDefault();if(vwrap.classList.contains('on'))stopVideo(false);else jump(cur-1)}
+  else if(k==='Escape'){if(vwrap.classList.contains('on'))stopVideo(true)}
+  else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})}
+  else if(k==='t'||k==='T'){const el=$('timer');el.style.display=el.style.display==='block'?'none':'block'}
+  else if(k==='Home'){jump(0);setPlay(false)}});
+let wheelLock=0;
+addEventListener('wheel',e=>{if(vwrap.classList.contains('on'))return;const n=Date.now();if(n<wheelLock)return;wheelLock=n+600;jump(cur+(e.deltaY>0?1:-1))},{passive:true});
+stage.addEventListener('click',()=>{if(cur===DEMO&&!vwrap.classList.contains('on')){playVideo();if(!linked)setPlay(true);return}if(vwrap.classList.contains('on')){toggle();return}if(!linked&&!playing)setPlay(true)});
+
+// 대본 창과 통신: BroadcastChannel(두 파일을 따로 열어도 연결) + opener.postMessage(예비). 같은 메시지는 id로 한 번만 처리.
+const bc=('BroadcastChannel' in window)?new BroadcastChannel('soliskill-talk'):null;
+const seen=new Set();
+function tell(m){m.src='soliskill-screen';m.id=Math.random().toString(36).slice(2);if(bc)bc.postMessage(m);if(opener)try{opener.postMessage(m,'*')}catch(e){}}
+function hear(d){if(!d||d.src!=='soliskill-script'||seen.has(d.id))return;seen.add(d.id);if(seen.size>500)seen.clear();
+  if(d.type==='state'){
+    if(!linked){linked=true;document.body.classList.add('linked');setPlay(false);$('pause').style.display='none';$('start').style.display='none'}
+    rs={...d,at:performance.now()}}
+  else if(d.type==='cmd'&&d.video==='play'){if(cur!==DEMO){lastRemote=DEMO;show(DEMO)}if(!vwrap.classList.contains('on'))playVideo()}
+  else if(d.type==='cmd'&&vwrap.classList.contains('on')){if(d.video==='pause')vid.pause();else if(d.video==='resume')vid.play().catch(()=>{});else if(d.video==='seek')vid.currentTime=d.t}
+  else if(d.type==='ping')tell({type:'hello'})}
+if(bc)bc.onmessage=e=>hear(e.data);
+addEventListener('message',e=>hear(e.data));
+setInterval(()=>tell({type:'alive'}),1000);
+setInterval(()=>{if(vwrap.classList.contains('on'))tell({type:'vtime',t:vid.currentTime,playing:!vid.paused})},250);
+tell({type:'hello'});
+
+show(0);tick();
+</script>
+</body>
+</html>

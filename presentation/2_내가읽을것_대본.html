@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SoliSkill 발표 대본</title>
+<style>
+@font-face{font-family:Pretendard;font-weight:400;src:local("Pretendard Regular"),url("자료/fonts/Pretendard-400.woff2") format("woff2")}
+@font-face{font-family:Pretendard;font-weight:700;src:local("Pretendard Bold"),url("자료/fonts/Pretendard-700.woff2") format("woff2")}
+:root{--p:#C4164D;--p2:#FF6F9C;--ps:#FCE7EE;--ink:#0E1A2E;--mute:#64748B;--line:#E4E9F2;--dim:#B9C2D0;--bar:#0E1420;--bar2:#1E2735}
+*{box-sizing:border-box}
+body{margin:0;font-family:Pretendard,"Malgun Gothic",sans-serif;color:var(--ink);background:#fff;letter-spacing:-.02em;word-break:keep-all}
+button{font-family:inherit;font-size:13px;border:0;border-radius:7px;padding:7px 12px;background:#2A3546;color:#fff;cursor:pointer}
+button:hover{background:#3B4757}
+button.main{background:var(--p);font-weight:700;min-width:92px}
+button.white{background:#fff;color:var(--bar);font-weight:700}
+button.on{background:var(--p2);color:#fff}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:10;background:var(--bar);color:#fff;padding:10px 20px 0;box-shadow:0 2px 14px rgba(0,0,0,.3)}
+.in{max-width:1100px;margin:0 auto}
+.steps{display:flex;gap:6px;margin-bottom:10px}
+.step{flex:1;background:var(--bar2);border-radius:8px;padding:7px 12px;cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden}
+.step b{display:block;font-size:14px}.step span{font-size:12px;color:#94A3B8;font-variant-numeric:tabular-nums}
+.step.on{border-color:var(--p);background:#3A1522}.step.on b{color:#FFB3C9}
+.step.done{opacity:.5}
+.step i{position:absolute;left:0;bottom:0;height:3px;background:var(--p);width:0}
+.step.over i{background:#ff4a4a}
+.row{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.clock{font-size:42px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.clock small{font-size:15px;color:#94A3B8;font-weight:400;margin-left:6px}
+.clock.over{color:#ff6b6b}
+.kv{font-size:12px;color:#94A3B8;line-height:1.5}
+.kv b{display:block;font-size:18px;color:#fff;font-variant-numeric:tabular-nums}
+.kv.warn b{color:#FFB3C9}.kv.over b{color:#ff6b6b}
+.kv.scr b{color:#FFB3C9;font-size:16px}
+#link{margin-left:auto;font-size:12px;color:#94A3B8;text-align:right;line-height:1.5}
+#link b{display:block;font-size:14px;color:#94A3B8}
+#link.ok b{color:#5BE39A}
+.btns{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap;align-items:center}
+.hint{font-size:11.5px;color:#7A8699;margin-left:auto}
+.prog{height:6px;background:#2A3546;margin:10px -20px 0;position:relative;cursor:pointer}
+.prog i{position:absolute;left:0;top:0;bottom:0;background:var(--p);width:0}
+.prog s{position:absolute;top:0;bottom:0;width:2px;background:#64748B}
+
+/* body */
+.wrap{max-width:1100px;margin:0 auto;padding:26px 12px 60vh}
+h1{font-size:24px;margin:0 0 4px}
+.meta{color:var(--mute);font-size:14px;line-height:1.7}
+.order{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 8px}
+.order div{border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.6;color:#4A5568}
+.order b{display:block;font-size:16px;color:var(--ink)}
+.order em{font-style:normal;color:var(--p);font-weight:700;font-variant-numeric:tabular-nums}
+.how{font-size:13.5px;color:var(--mute);margin:12px 0;line-height:1.7}
+.how b{color:var(--ink)}
+details.rs{border:2px solid var(--bar);border-radius:10px;overflow:hidden;margin:16px 0 8px}
+details.rs summary{cursor:pointer;background:var(--bar);color:#fff;font-size:14px;font-weight:700;padding:9px 14px;list-style:none}
+details.rs summary span{color:#FFB3C9;font-weight:400;margin-left:8px}
+.rs table{width:100%;border-collapse:collapse;font-size:14.5px}
+.rs td{padding:7px 12px;border-top:1px solid var(--line);vertical-align:top}
+.rs td:nth-child(1){width:64px;font-weight:700;color:var(--p);font-variant-numeric:tabular-nums}
+.rs td:nth-child(2){width:150px;font-weight:700}
+.rs td:nth-child(2) small{display:block;font-weight:400;color:var(--mute);font-size:12px}
+h2{font-size:15px;color:#fff;background:var(--bar);padding:10px 14px;border-radius:7px;margin:36px 0 10px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+h2 span{color:#FFB3C9;font-weight:400;font-size:13px}
+h2 u{margin-left:auto;text-decoration:none;font-weight:400;font-size:13px;color:#C6D2E2;font-variant-numeric:tabular-nums}
+h3{font-size:14px;color:var(--p);border-bottom:2px solid var(--p);padding-bottom:4px;margin:24px 0 6px}
+.line{display:grid;grid-template-columns:90px 1fr;gap:16px;padding:16px 6px;border-bottom:1px solid var(--line);border-left:4px solid transparent;cursor:pointer;transition:background .2s}
+.line.cur{background:#FFF5F8;border-left-color:var(--p)}
+.line.past{opacity:.42}
+.line.off{opacity:.28}.line.off .t{color:var(--mute)}
+.t{font-size:22px;font-weight:700;color:var(--p);font-variant-numeric:tabular-nums;line-height:1.1}
+.t em{display:block;font-style:normal;font-size:11.5px;color:var(--mute);font-weight:400;margin-top:5px;line-height:1.5}
+.hd{font-size:12.5px;color:var(--mute);margin-bottom:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.hd b{color:var(--ink)}
+.hd .cue{font-size:12.5px;font-weight:700;color:#fff;background:var(--bar);border-radius:5px;padding:3px 9px}
+.hd .star{color:var(--p);font-weight:700}
+.hd .fid{font-size:11.5px;color:var(--mute);border:1px solid var(--line);border-radius:5px;padding:1px 7px}
+.act{display:inline-block;font-size:15px;font-weight:700;color:#fff;background:var(--p);border-radius:7px;padding:5px 11px;margin:0 0 10px;line-height:1.5}
+.act:before{content:"▶ 할 일  "}
+.tx{font-size:21px;line-height:1.9}
+.line.cur .tx{font-size:25px}
+.w{color:var(--dim);background-image:linear-gradient(90deg,var(--ink) 0,var(--ink) var(--f,0%),var(--dim) var(--f,0%));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.w.b{font-weight:700;background-image:linear-gradient(90deg,var(--p) 0,var(--p) var(--f,0%),#EBB0C2 var(--f,0%))}
+.line:not(.cur) .w{-webkit-text-fill-color:currentColor;color:var(--ink);background:none}
+.line:not(.cur):not(.past) .w.b{color:var(--p)}
+.gest{font-size:14px;color:#4A5568;margin-top:8px;background:#F4F6FA;border-radius:7px;padding:6px 10px;display:inline-block}
+.gest:before{content:"👉 손짓  ";font-weight:700;color:var(--ink)}
+.note{font-size:16px;line-height:1.75;color:#333}
+.box{border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:14px 0;font-size:14.5px;line-height:1.75;color:#333}
+.box b{color:var(--ink)}
+.box h4{margin:0 0 6px;font-size:14px;color:var(--p)}
+.box ul{margin:4px 0 0;padding-left:20px}
+@media print{
+ .bar{display:none}.wrap{padding-bottom:0}.line{page-break-inside:avoid}.line.past{opacity:1}.line.cur{background:none;border-left-color:transparent}
+ .line.cur .tx{font-size:21px}.w{-webkit-text-fill-color:currentColor!important;background:none!important;color:var(--ink)!important}.w.b{color:var(--p)!important}
+ h2,.act,.hd .cue{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ details{display:block}details>*{display:block}
+}
+</style>
+</head>
+<body>
+<div class="bar"><div class="in">
+  <div class="steps" id="steps"></div>
+  <div class="row">
+    <div class="clock" id="clk"><span id="cl">0:00</span><small id="cls"></small></div>
+    <div class="kv" id="kvrem">이 단계 남은 시간<b id="rem">–</b></div>
+    <div class="kv">전체 경과 / 계획<b id="all">–</b></div>
+    <div class="kv scr">지금 띄울 화면<b id="scr">–</b></div>
+    <div class="kv">다음 항목까지<b id="nxt">–</b></div>
+    <div class="kv">현재 시각<b id="wall">–</b></div>
+    <div class="kv">종료 예정<b id="eta">–</b></div>
+    <div id="link">발표 화면<b id="lk">연결 안 됨</b></div>
+  </div>
+  <div class="btns">
+    <button class="main" id="pp">▶ 시작</button><button class="white" id="nx">다음 구간 ▶▶</button><button id="rs">전체 초기화</button>
+    <button data-d="-5">−5초</button><button data-d="-1">−1초</button><button data-d="1">+1초</button><button data-d="5">+5초</button>
+    <button class="white" id="op">발표 화면 열기</button><button id="vb">백업 영상 재생</button><button id="as">자동 스크롤 켜짐</button><button id="pr">인쇄</button>
+    <span class="hint">Space 시작/정지 · Enter 다음 구간 · ←/→ 1초 · ↑/↓ 이전/다음 항목 · 항목 클릭 = 그 시각으로</span>
+  </div>
+  <div class="prog" id="pg"><i id="pb"></i></div>
+</div></div>
+
+<div class="wrap">
+  <h1>SoliSkill 발표 진행 대본 · 타임라인</h1>
+  <div class="meta">발표: <b>팀 스카이콩콩</b> · 박선우 · 윤승미 · 핵심 메시지 <b>“프로젝트는 수시로 바뀌어도, 적합한 인력은 바로 찾는다”</b></div>
+  <div class="order" id="order"></div>
+  <div class="how">읽는 법 — <b>회색 글자가 진하게 채워지는 속도</b>에 맞춰 읽습니다. <b style="color:var(--p)">빨간 글자</b>는 힘줘서 말할 곳, ★ 는 가장 시간을 들일 장면. 위쪽 <b>[발표 화면 열기]</b>로 연 화면은 시간에 맞춰 장표가 자동으로 넘어갑니다. 라이브 시연(2단계)은 시간에 맞춰 넘어가지 않으니, 시연을 마치면 <b>Enter(다음 구간)</b>.</div>
+  <details class="rs" id="rsd"><summary>한눈에 보는 진행표<span>시각 → 띄울 장표 → 첫 마디 · 눌러서 펼치기</span></summary><table id="rst"></table></details>
+  <div id="body"></div>
+</div>
+
+<script>
+// ───────── 데이터: 시간(초)은 각 단계 시작 기준. slide = 발표 화면 장표 번호(1~15) ─────────
+const SLIDES=['','표지','개발 배경 · 문제','원인 → 해결','해법 · 하나의 흐름','기능 한눈에','01 찾기 · AI 인력 매칭 ★','적합도 기준','02 확인 · 조직도','03 배치 · 조합 평가','04 갱신 · 자동 역량 갱신 ★','조직 역량 분포','신뢰','라이브 시연','기대효과','마무리'];
+const PH=[
+ {name:'1. 발표',dur:297,desc:'문제와 해법을 장표로 설명 (장표 1~13).<br>4분 57초가 지나면 타이머가 빨간색으로 초과 시간을 표시합니다.'},
+ {name:'2. 라이브 시연',dur:360,desc:'브라우저로 전환해 직접 시연. 장표는 13번에서 멈춰 있습니다.<br>막히면 [백업 영상 재생].'},
+ {name:'3. 마무리',dur:47,desc:'시연을 마치면 Enter → 장표 14 기대효과 → 15 마무리.'}];
+const SEC=[
+ {ph:0,h:'1. 발표',sub:'문제 → 원인 → 해법 → 4단계 흐름 → 신뢰',span:'0:00 – 4:57'},
+ {ph:1,h:'2. 라이브 시연',sub:'두 명이면 한 명은 말하고 한 명은 조작 · 기능 ID는 기능 체크리스트와 같음',span:'4:57 – 10:57'},
+ {ph:2,h:'3. 마무리',sub:'기대효과 → 핵심 메시지로 닫기',span:'10:57 – 11:44'}];
+// say: 문장 배열, **굵게** = 힘줘서 말할 곳
+const L=[
+ {ph:0,s:0,e:15,slide:1,ttl:"인사 · 소개",say:["안녕하세요. 스카이콩콩 팀 박선우, 윤승미입니다.","저희는 프로젝트에 맞는 사람을 바로 찾아 주는 서비스, **SoliSkill**을 만들었습니다."]},
+ {ph:0,s:15,e:50,slide:2,ttl:"개발 배경 · 문제",say:["저희 회사는 업무 특성상 다양한 프로젝트가 **수시로 시작되고 종료**됩니다.","그때마다 각 프로젝트에 적합한 인력을 배치하는 데 **적지 않은 시간과 노력**이 소요됩니다.","예를 들어 **연계 업무에 특화된 인력**이 필요할 경우, 각 프로젝트의 PM에게 **일일이 문의하며 수소문**해야 하는 실정입니다.","인력이 현장과 고객사에 분산되어 있어 **관리자조차 전체 역량을 파악하기 어렵고**, 이러한 탐색 과정은 **프로젝트마다 반복**됩니다."],gest:"PM A → PM B → “계속 물어보기…” 흐름을 손으로 따라가기"},
+ {ph:0,s:50,e:80,slide:3,ttl:"원인 → 해결",say:["원인은 하나입니다. **모두가 함께 보는 객관적인 자료가 없습니다.**","통합 문서가 없고, 그래서 **리더마다 기준이 다르고**, 끝난 프로젝트는 기록에 남지 않습니다.","SoliSkill은 이걸 하나씩 풉니다.","252명을 **같은 양식으로 한곳에**, 누구에게나 **같은 공식**으로, 찾기는 **검색 한 번**, 투입 현황은 **조직도**, 역량은 **완료하면 자동 갱신.**"],gest:"표를 위에서 아래로, 분홍 줄(리더마다 다른 기준)에서 잠깐 멈춤"},
+ {ph:0,s:80,e:100,slide:4,ttl:"해법 · 하나의 흐름",say:["정리하면 **찾기, 확인, 배치, 갱신**, 이렇게 네 단계입니다.","마지막 단계에서 갱신된 역량이 다음 배치에 그대로 쓰이기 때문에, **쓸수록 추천이 정확해집니다.**"],gest:"01 → 04 화살표를 따라가며, 마지막 어두운 카드에서 멈춤"},
+ {ph:0,s:100,e:120,slide:5,ttl:"기능 한눈에",say:["SoliSkill은 **AI 인력 매칭, 배치·운영, 조직도, 조직 역량, 마이페이지, 로그인·권한**, 이렇게 여섯 가지 기능으로 구성되어 있습니다."],gest:"왼쪽 위 어두운 카드"},
+ {ph:0,s:120,e:155,slide:6,ttl:"01 찾기 · AI 인력 매칭",star:1,say:["참고로 지금부터 화면에 나오는 직원별 역량 정보는 **시연을 위해 만든 가상 데이터**입니다.","아까 그 질문을 그대로 입력해 보겠습니다. “연계 작업에 특화된 사람이 필요해요.”","그러면 252명 중에서 **김은태 책임**이 1순위로 나옵니다. 시스템 연계 **Lv.5**이고, 실제 프로젝트에서 검증됐고, **지금 바로 투입할 수 있습니다.**","점수만 보여 주는 게 아니라 **추천한 이유**도 함께 알려 줍니다.","여러 PM에게 일일이 확인하던 과정을, 이제 **한 번의 검색**으로 대신할 수 있습니다."],gest:"1순위 카드의 “💡 추천 이유” → 초록 “가용” 배지"},
+ {ph:0,s:155,e:190,slide:7,ttl:"적합도 기준 · 공개 · 조정 가능",say:["그럼 이 96점은 어떻게 계산했을까요? **계산 방식은 화면에 그대로 공개되어 있습니다.**","보유한 기술은 **기본 60점에 숙련도 한 단계당 8점**을 더합니다. 강점이 맞으면 100점, 없으면 0점이고, 이 점수들의 평균을 냅니다.","김은태 책임은 92점과 100점이라서 **96점**입니다. 모든 직원에게 **같은 공식**을 쓰니까, 누가 봐도 기준이 같습니다.","60점과 8점은 저희가 정한 **기본값**이고, 회사에서 기준을 정하면 **관리자가 화면에서 바로 바꿀 수 있습니다.**"],gest:"왼쪽 “60 + 숙련도 × 8” → 오른쪽 “92” → 아래 분홍 띠"},
+ {ph:0,s:190,e:205,slide:8,ttl:"02 확인 · 조직도",say:["추천된 사람이 지금 다른 프로젝트에 들어가 있는지도 **따로 물어볼 필요가 없습니다.**","조직도에서 **초록색은 바로 투입 가능**, 주황색은 다른 프로젝트에 참여 중이라는 뜻입니다."],gest:"초록 점과 주황 “투입” 배지"},
+ {ph:0,s:205,e:225,slide:9,ttl:"03 배치 · 조합 평가",say:["추천된 사람으로 **버튼 한 번에** 프로젝트를 만들고, 배치 전에 조합을 평가합니다.","기술은 다 갖췄지만 **한 명만 가진 기술**이 있으면, 이탈 리스크로 미리 경고합니다."],gest:"오른쪽 주황색 경고 줄"},
+ {ph:0,s:225,e:250,slide:10,ttl:"04 갱신 · 자동 역량 갱신",say:["마지막 단계는 **역량 갱신**입니다.","프로젝트를 **완료 처리하는 순간**, 참여한 사람들이 쓴 기술의 숙련도가 **자동으로 한 단계 올라갑니다.**","이력서를 따로 고치지 않아도 역량 정보가 **항상 최신으로 유지되고**, 그만큼 **다음 추천도 정확해집니다.**"],gest:"오른쪽 아래 초록 알림 → 왼쪽 “Lv.4 → Lv.5”"},
+ {ph:0,s:250,e:265,slide:11,ttl:"조직 역량 분포 · 인사이트",say:["개인의 성장은 **조직 지도**로 이어집니다.","가장 얇은 분야를 짚어 줘서, 중부지사라면 **데이터 1명** — 채용과 교육 계획의 근거가 됩니다."],gest:"인사이트 한 줄 → 프론트엔드 막대"},
+ {ph:0,s:265,e:285,slide:12,ttl:"신뢰",say:["역량은 민감한 정보라서 보안에도 신경 썼습니다.","AI에는 이름 대신 **임시 번호와 역량만** 보내고, 직원은 **본인 정보만** 볼 수 있으며, 공개 여부도 **본인이** 정합니다.","AI를 쓸 수 없을 때도 **기본 계산 방식으로 바뀌어 계속 동작합니다.**"]},
+ {ph:0,s:285,e:297,slide:13,ttl:"시연으로 전환",say:["그럼 지금부터 **실제 화면으로 시연**하겠습니다.","앞에서 예로 든 것처럼, **연계 작업을 잘하는 사람을 찾는 상황**으로 보여드리겠습니다."],post:"말이 끝나면 브라우저로 전환(Alt+Tab) → 대본은 자동으로 2단계로"},
+ {ph:1,sub:"① 메인 시나리오 — 연계 작업 담당자 찾기 · 3분 30초"},
+ {ph:1,s:0,e:15,slide:13,ttl:"로그인",act:"admin / admin1234 로그인(우덕성 팀장) → 프로젝트 보드",fid:"A1",say:["먼저 관리자 계정으로 로그인하겠습니다.","다시 말씀드리면, 화면 속 직원 역량은 **시연용 가상 데이터**입니다."]},
+ {ph:1,s:15,e:45,slide:13,ttl:"문장으로 찾기",act:"역량 검색칸에 “전자정부” Enter → 추가 설명에 “연계 작업에 특화된 사람이 필요해요” → 적합 인원 찾기",fid:"B1 · B2",say:["필요한 기술은 검색해서 추가하고, 원하는 조건은 **평소에 말하듯이** 문장으로 적으면 됩니다.","‘연계’라고만 써도 **시스템 연계 기술**로 알아서 찾아 줍니다."]},
+ {ph:1,s:45,e:70,slide:13,ttl:"추천 결과",star:1,act:"1순위 김은태 카드의 추천 이유 · 가용 배지 · 역량 칩 가리키기",fid:"B4 · B5 · B6",say:["보시는 것처럼 252명 중에서 바로 추천이 나왔습니다.","시스템 연계 **Lv.5**, 관련 프로젝트 경험, 그리고 **지금 바로 투입할 수 있는지**까지 한 화면에서 확인할 수 있습니다."]},
+ {ph:1,s:70,e:105,slide:13,ttl:"기준 공개 · 조정",act:"“ⓘ 적합도는 어떻게 계산되나요?” 펼치기 → 카드의 계산식 → 기본점 40, 단계당 12 → 초기값으로",fid:"B7 · B8 · B9",say:["점수 계산 방식도 여기서 펼쳐 볼 수 있습니다. 92점과 100점의 평균이라 **96점**입니다.","기준값을 바꾸면 점수와 순위가 **바로 다시 계산됩니다.**","확인했으니 기준은 **원래대로** 돌려놓겠습니다."]},
+ {ph:1,s:105,e:125,slide:13,ttl:"근거 확인",act:"카드의 “김은태” 이름 클릭 → 역량 상세",fid:"B12 · E5 · E6",say:["이름을 누르면 추천 근거도 확인할 수 있습니다.","**중부권 행정정보 연계 구축** 프로젝트를 통해 검증된 Lv.5입니다."]},
+ {ph:1,s:125,e:145,slide:13,ttl:"조직도에서 상태",act:"조직도 → “신민경” 검색",fid:"D1 · D2 · D3",say:["조직도에서는 직원마다 지금 프로젝트에 투입돼 있는지 **바로 보입니다.**","**신민경 책임은 지금 시스템 연계 Lv.4입니다. 이 숫자를 잠깐 기억해 주세요.**"]},
+ {ph:1,s:145,e:180,slide:13,ttl:"원클릭 배치 · 조합 평가",act:"프로젝트 보드 → 이 3명으로 프로젝트 만들기 → 이름 “중부권 행정정보 연계 고도화”, 시점 → + 기술 추가 Java(백엔드) → 이 조합 평가하기",fid:"C1 · C3 · C4",say:["이제 추천된 세 명으로 **바로 프로젝트를 만들어 보겠습니다.**","팀 구성을 평가해 보면 필요한 기술은 다 갖췄지만, **Java는 김은태 책임 한 명만** 할 수 있어서 경고가 표시됩니다."]},
+ {ph:1,s:180,e:200,slide:13,ttl:"완료 → 자동 성장",star:1,act:"프로젝트 생성 · 참여 기록 → 새 카드를 진행 → 검토 → 완료",fid:"C5 · C8 · C9",say:["이제 이 프로젝트를 완료로 바꿔 보겠습니다.","알림에 나온 것처럼, 참여한 세 명의 역량이 **자동으로 올라갔습니다.**"]},
+ {ph:1,s:200,e:210,slide:13,ttl:"다시 매칭 결과",act:"위로 스크롤해 매칭 결과 확인",fid:"C8",say:["아까 Lv.4였던 **신민경 책임이 Lv.5가 됐고**, 적합도도 **96점에서 100점**으로 올랐습니다."]},
+ {ph:1,sub:"② 그 밖의 주요 기능 · 2분 30초 (시간이 부족하면 통째로 생략)"},
+ {ph:1,s:210,e:230,slide:13,ttl:"지사 보드 · 상세",act:"중부지사 보드의 “중부지사 사업 제안서·산출물 표준화” 카드 클릭 → 닫기",fid:"C6 · C7",say:["프로젝트 보드는 본사와 지사로 나뉘어 있고, 카드를 누르면 참여 인원과 기술을 확인하거나 수정할 수 있습니다."]},
+ {ph:1,s:230,e:270,slide:13,ttl:"마이페이지",act:"마이페이지 → 프로필·숙련도·포트폴리오 → 공개 스위치 껐다 켜기 → + 역량 개발 기록(교육, 활동명, 시점, 칩 AG Grid) → 활동 기록 · 스킬 반영",fid:"F1 ~ F5",say:["마이페이지에서는 숙련도마다 **어떤 근거로 매겨졌는지** 함께 보이고, 역량 공개 여부는 **본인만** 바꿀 수 있습니다.","교육이나 자격증 이력을 등록하면, 예를 들어 AG Grid 역량이 Lv.4에서 **Lv.5로** 올라갑니다."]},
+ {ph:1,s:270,e:295,slide:13,ttl:"조직 역량",act:"조직 역량(중부지사) → 분포·인사이트 → 검색창에 “AG Grid”",fid:"E1 ~ E5",say:["조직 역량 화면에서는 분야별 인원과 **부족한 분야**를 보여 주고, 지사나 부서별로도 볼 수 있습니다."]},
+ {ph:1,s:295,e:320,slide:13,ttl:"이력서 자동 채우기",act:"+ 직원 추가 → 이력서 칸에 경력 문장 → AI로 자동 채우기 → 취소",fid:"E7 · E8",say:["새로 입사한 직원은 이력서 내용을 붙여 넣기만 하면 **역량이 자동으로 입력됩니다.**"]},
+ {ph:1,s:320,e:345,slide:13,ttl:"직원 화면",act:"로그아웃 → 직원 r175 / 1234 → 프로젝트 보드",fid:"A1 · G1",say:["일반 직원 계정으로 들어가면 **우리 팀 보드와 본인이 참여한 프로젝트만** 보이고, 다른 직원의 역량은 볼 수 없습니다."]},
+ {ph:1,s:345,e:360,slide:13,ttl:"시연 마무리",act:"(선택) 오른쪽 위 테마 버튼 → 발표 화면으로 돌아와 Enter",fid:"A5",say:["다크 모드도 지원합니다.","이렇게 **찾고, 확인하고, 배치하고, 프로젝트가 끝나면 역량이 자동으로 갱신됩니다.**"]},
+ {ph:1,v:1,sub:"백업 영상으로 진행할 때 — 2분 37초 · 영상 재생 시간에 맞춰 진행 (영상이 끝나면 자동으로 3단계)"},
+ {ph:1,v:1,s:0,e:10.4,slide:13,ttl:"시작 · 로그인",fid:"A1",say:["시연 영상으로 보여드리겠습니다. 화면 속 직원 역량은 **시연용 가상 데이터**입니다.","관리자 **우덕성 팀장** 계정으로 로그인합니다."]},
+ {ph:1,v:1,s:10.4,e:19.1,slide:13,ttl:"문장으로 찾기",fid:"B1 · B2",say:["필요한 역량은 검색해서 넣고, PM에게 묻던 질문은 **문장 그대로** 적습니다."]},
+ {ph:1,v:1,s:19.1,e:27.2,slide:13,ttl:"추천 결과",fid:"B4 · B5 · B6",say:["1순위 **김은태 책임**, 시스템 연계 Lv.5에 검증 이력이 있고 **바로 합류 가능**합니다."]},
+ {ph:1,v:1,s:27.2,e:42.1,slide:13,ttl:"기준 공개 · 조정",fid:"B7 · B8 · B9",say:["적합도 기준은 **공개**되어 있고, 모든 직원에게 같은 공식입니다.","관리자가 기준을 바꾸면 **즉시 다시 계산**되고, 초기값으로 돌릴 수 있습니다."]},
+ {ph:1,v:1,s:42.1,e:52.6,slide:13,ttl:"근거 확인",fid:"B12 · E6",say:["이름을 누르면 **역량 상세**로 이동합니다.","시스템 연계 Lv.5는 **중부권 행정정보 연계 구축** 프로젝트로 검증됐습니다."]},
+ {ph:1,v:1,s:52.6,e:61.4,slide:13,ttl:"조직도",fid:"D1 · D2 · D3",say:["조직도에서는 **투입·가용 상태**가 바로 보입니다.","**신민경 책임, 시스템 연계 Lv.4입니다.**"]},
+ {ph:1,v:1,s:61.4,e:75.1,slide:13,ttl:"원클릭 프로젝트",fid:"C1",say:["추천된 세 명으로 **바로 프로젝트를 만들고**, Java 기술을 하나 추가해 보겠습니다."]},
+ {ph:1,v:1,s:75.1,e:80.9,slide:13,ttl:"조합 평가",fid:"C3 · C4",say:["**Java는 김은태 책임 한 명뿐**이라 경고가 뜹니다."]},
+ {ph:1,v:1,s:80.9,e:89.6,slide:13,ttl:"완료 → 자동 성장",fid:"C5 · C8 · C9",say:["완료로 옮기는 순간, 참여자 역량이 **자동으로 갱신**됩니다."]},
+ {ph:1,v:1,s:89.6,e:93.8,slide:13,ttl:"다음 매칭에 반영",fid:"C8",say:["신민경 책임이 **100점**이 됐습니다."]},
+ {ph:1,v:1,s:93.8,e:100.6,slide:13,ttl:"지사 보드 · 상세",fid:"C6 · C7",say:["보드는 **본사와 중부지사**로 나뉘고, 카드에서 상세를 봅니다."]},
+ {ph:1,v:1,s:100.6,e:121.4,slide:13,ttl:"마이페이지",fid:"F1 ~ F5",say:["마이페이지에서는 **숙련도와 근거**를 관리하고, 공개 여부는 **본인만** 바꿉니다.","교육을 기록하면 **AG Grid가 Lv.5**로 올라갑니다."]},
+ {ph:1,v:1,s:121.4,e:126.2,slide:13,ttl:"조직 역량",fid:"E1 ~ E3",say:["조직 전체 분포와 **가장 얇은 분야**를 보여 줍니다."]},
+ {ph:1,v:1,s:126.2,e:138.9,slide:13,ttl:"이력서 자동 채우기",fid:"E7 · E8",say:["새 직원은 이력서를 붙여 넣으면 **역량이 자동으로 채워집니다.**"]},
+ {ph:1,v:1,s:138.9,e:151,slide:13,ttl:"직원 화면",fid:"A1 · G1",say:["직원 **윤승미 책임**으로 로그인하면 **우리 팀 보드와 참여 프로젝트만** 보입니다."]},
+ {ph:1,v:1,s:151,e:157.2,slide:13,ttl:"다크 모드 · 마무리",fid:"A5",say:["다크 모드도 지원합니다.","**찾고, 확인하고, 배치하고, 자동으로 갱신됩니다.**"]},
+ {ph:2,s:0,e:35,slide:14,ttl:"기대효과",say:["정리하면 기대효과는 네 가지입니다.","프로젝트마다 반복되던 **인력 탐색의 시간과 노력을 줄이고**, 같은 근거로 **객관적으로 배치**하며,","누가 바쁘고 누가 여유 있는지 보여 **인력을 효율적으로 운영**하고, 한 명에게만 의존하는 기술을 미리 경고해 **배치 리스크에 대비**합니다."]},
+ {ph:2,s:35,e:47,slide:15,ttl:"마무리",say:["**프로젝트는 수시로 바뀌어도, 적합한 인력은 바로 찾을 수 있습니다.**","지금까지 스카이콩콩 팀의 발표였습니다. 감사합니다."]}];
+const BOXES={1:`<div class="box"><h4>시연 전 체크</h4><ul><li>시연 30분 전 로그인 화면의 <b>🔄 데모 데이터 초기화</b> — 신민경 <b>96 → 100</b> 숫자는 초기화 직후 기준</li><li>4번에서 기준을 바꿨다면 반드시 <b>초기값으로</b> · 11번 공개 스위치는 <b>다시 켜 두기</b> · 13번 직원 추가는 <b>취소</b></li><li>조직 역량으로 갈 때 <b>검색창 비우기</b> (이전 검색어가 남으면 “직원 0명”)</li><li>“📐 규칙 기반”이 보이면: “AI가 없어도 배치 업무가 멈추지 않도록 설계했습니다.”</li><li>시연이 막히면 위쪽 <b>[백업 영상 재생]</b> — 발표 화면에서 같은 순서의 영상이 나옵니다</li></ul></div>`};
+
+
+// ───────── 화면 구성 ─────────
+const $=id=>document.getElementById(id);
+const fmt=s=>{const n=s<0;s=Math.floor(Math.abs(s));return (n?'+':'')+Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+// 영상 모드: 백업 영상이 재생되는 동안 2단계는 영상 길이(VDUR)·영상 전용 멘트(v:1)·영상 재생 시간으로 진행
+const VDUR=157;let vmode=false,vt=null;
+const dur=i=>i===1&&vmode?VDUR:PH[i].dur;
+const act=l=>l.ph!==1||!!l.v===vmode;
+let offs=[],PLAN=0;
+function recalc(){let a=0;PH.forEach((p,i)=>{offs[i]=a;a+=dur(i)});PLAN=a;
+  PH.forEach((p,i)=>{if(p.el)p.el.querySelector('span').textContent=fmt(offs[i])+' – '+fmt(offs[i]+dur(i))+' · '+fmt(dur(i))})}
+recalc();
+PH.forEach((p,i)=>{const d=document.createElement('div');d.className='step';d.innerHTML='<b>'+p.name+'</b><span>'+fmt(offs[i])+' – '+fmt(offs[i]+p.dur)+' · '+fmt(p.dur)+'</span><i></i>';d.onclick=()=>goPhase(i,0);$('steps').appendChild(d);p.el=d;
+  const o=document.createElement('div');o.innerHTML='<b>'+p.name+'</b><em>'+fmt(offs[i])+' – '+fmt(offs[i]+p.dur)+'</em> ('+fmt(p.dur)+')<br>'+p.desc;$('order').appendChild(o);
+  const m=document.createElement('s');m.style.left=(offs[i]/PLAN*100)+'%';if(i)$('pg').appendChild(m)});
+
+// 문장 → 단어별 시간 (글자 수 비례, 문장 끝 쉼)
+function words(sents,s,e){const toks=[];sents.forEach((st,si)=>{st.split('**').forEach((seg,k)=>seg.split(/(\s+)/).forEach(p=>{if(!p)return;if(/^\s+$/.test(p)){if(toks.length)toks[toks.length-1].sp=true;return}toks.push({t:p,b:k%2===1,wt:p.length+1})}));const z=toks[toks.length-1];if(z){z.sp=true;z.br=si<sents.length-1;z.wt+=4}});
+  const tot=toks.reduce((a,k)=>a+k.wt,0);let c=s;toks.forEach(k=>{k.s=c;c+=k.wt/tot*(e-s);k.e=c});return toks}
+const body=$('body'),lines=[];let lastPh=-1;
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+L.forEach(o=>{
+  if(o.ph!==lastPh){lastPh=o.ph;const S=SEC[o.ph],h=document.createElement('h2');h.innerHTML=S.h+' <span>'+S.sub+'</span><u>'+S.span+'</u>';body.appendChild(h);if(BOXES[o.ph])body.insertAdjacentHTML('beforeend',BOXES[o.ph])}
+  if(o.sub){const h=document.createElement('h3');h.textContent=o.sub;body.appendChild(h);return}
+  const el=document.createElement('div');el.className='line';
+  const ws=o.say?words(o.say,o.s,o.e):[];
+  let tx='';ws.forEach(k=>{tx+='<span class="w'+(k.b?' b':'')+'">'+esc(k.t)+'</span>'+(k.br?'<br>':k.sp?' ':'')});
+  const g=offs[o.ph]+o.s;
+  el.innerHTML='<div class="t">'+(o.v?'영상<br>'+fmt(o.s):fmt(g))+'<em>'+Math.round(o.e-o.s)+'초'+(o.ph===1&&!o.v?'<br>시연 '+fmt(o.s):'')+'</em></div><div>'
+   +'<div class="hd"><span class="cue">장표 '+o.slide+'</span><b>'+o.ttl+'</b>'+(o.star?'<span class="star">★</span>':'')+(o.fid?'<span class="fid">'+o.fid+'</span>':'')+'</div>'
+   +(o.act?'<div class="act">'+esc(o.act)+'</div>':'')
+   +(o.note?'<div class="note">'+o.note+'</div>':'')
+   +(tx?'<div class="tx">'+tx+'</div>':'')
+   +(o.gest?'<div class="gest">'+esc(o.gest)+'</div>':'')
+   +(o.post?'<div class="gest" style="background:#FFF5F8">'+esc(o.post)+'</div>':'')+'</div>';
+  el.onclick=()=>goPhase(o.ph,o.s);body.appendChild(el);
+  lines.push({...o,el,ws:ws.map((k,i)=>({...k,el:el.querySelectorAll('.w')[i]}))})});
+$('rst').innerHTML=lines.map(l=>'<tr><td>'+fmt(offs[l.ph]+l.s)+'</td><td>장표 '+l.slide+'<small>'+l.ttl+'</small></td><td>'+(l.act?'▶ '+esc(l.act):esc((l.say?l.say[0]:'').replace(/\*\*/g,'')))+'</td></tr>').join('');
+
+
+// ───────── 타이머 ─────────
+let ph=0,base=0,t0=0,playing=false,auto=true,curIdx=-1;
+const vOn=()=>vmode&&ph===1&&vt;
+const now=()=>vOn()?vt.t+(vt.playing?(performance.now()-vt.at)/1000:0):playing?base+(performance.now()-t0)/1000:base;
+function setPlay(p){if(vOn()){tell({type:'cmd',video:p?'resume':'pause'})}if(p){t0=performance.now()}else{base=now()}playing=p;$('pp').textContent=p?'❚❚ 정지':'▶ 시작';send()}
+function seek(t){if(vOn()){t=Math.max(0,Math.min(VDUR,t));vt={...vt,t,at:performance.now()};tell({type:'cmd',video:'seek',t})}base=Math.max(0,t);t0=performance.now();curIdx=-1;send()}
+function goPhase(i,t){if(i<0||i>=PH.length)return;ph=i;seek(t||0)}
+$('pp').onclick=()=>setPlay(!playing);
+$('nx').onclick=()=>{if(ph<PH.length-1){goPhase(ph+1,0);if(!playing)setPlay(true)}};
+$('rs').onclick=()=>{setPlay(false);goPhase(0,0);scrollTo({top:0,behavior:'smooth'})};
+document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>seek(now()+ +b.dataset.d));
+$('as').onclick=()=>{auto=!auto;$('as').textContent='자동 스크롤 '+(auto?'켜짐':'꺼짐');curIdx=-1};
+$('pr').onclick=()=>{document.querySelectorAll('details').forEach(d=>d.open=true);print()};
+$('pg').onclick=e=>{const r=$('pg').getBoundingClientRect();const x=(e.clientX-r.left)/r.width*PLAN;let i=PH.length-1;while(i>0&&x<offs[i])i--;goPhase(i,x-offs[i])};
+addEventListener('keydown',e=>{if(e.target.tagName==='SUMMARY')return;
+  if(e.code==='Space'){e.preventDefault();document.activeElement.blur();setPlay(!playing)}
+  else if(e.code==='Enter'){e.preventDefault();document.activeElement.blur();$('nx').onclick()}
+  else if(e.code==='ArrowRight')seek(now()+1);else if(e.code==='ArrowLeft')seek(now()-1);
+  else if(e.code==='ArrowDown'||e.code==='ArrowUp'){e.preventDefault();const t=now(),ls=lines.filter(l=>l.ph===ph&&act(l));let c=-1;ls.forEach((l,i)=>{if(l.s<=t+.05)c=i});const n=e.code==='ArrowDown'?c+1:(c>=0&&t-ls[c].s>1.5?c:c-1);seek(ls[Math.max(0,Math.min(ls.length-1,n))].s)}});
+
+// ───────── 발표 화면 연결 ─────────
+// BroadcastChannel(두 파일을 따로 열어도 연결) + 직접 연 창에는 postMessage(예비). 같은 메시지는 id로 한 번만 처리.
+// 장표 번호가 아니라 {단계, 경과 시간, 재생 여부, 시간표}를 보낸다 → 발표 화면이 스스로 장표를 계산하므로
+// 이 대본 창이 가려지거나 최소화돼 느려져도 장표는 제시간에 넘어간다.
+let scr=null,videoOn=false,lastAlive=-1e9;
+const bc=('BroadcastChannel' in window)?new BroadcastChannel('soliskill-talk'):null,seen=new Set();
+const SCHED=lines.map(l=>[l.ph,l.s,l.slide-1]);
+function curSlide(){const t=now();let s=PH[ph]&&lines.find(l=>l.ph===ph).slide;lines.forEach(l=>{if(l.ph===ph&&l.s<=t)s=l.slide});return s}
+function tell(m){m.src='soliskill-script';m.id=Math.random().toString(36).slice(2);if(bc)bc.postMessage(m);if(scr&&!scr.closed)try{scr.postMessage(m,'*')}catch(e){}}
+function send(){tell({type:'state',ph,t:now(),playing,off:offs[ph],name:PH[ph].name,sched:SCHED})}
+setInterval(send,500);
+const alive=()=>performance.now()-lastAlive<3000;
+$('op').onclick=()=>{if(alive()&&!confirm('이미 연결된 발표 화면이 있습니다. 하나 더 열까요?'))return;
+  scr=window.open('1_화면에띄울것_발표화면.html','soliskill_screen','width=1280,height=720');if(!scr)alert('팝업이 차단되었습니다. 주소창 오른쪽에서 팝업을 허용해 주세요.');setTimeout(send,600)};
+$('vb').onclick=()=>{if(!alive()){alert('발표 화면이 연결되어 있지 않습니다. [발표 화면 열기]를 눌러 주세요.');return}if(ph===0)goPhase(1,0);tell({type:'cmd',video:'play'})};
+function hear(d){if(!d||d.src!=='soliskill-screen'||seen.has(d.id))return;seen.add(d.id);if(seen.size>500)seen.clear();
+  lastAlive=performance.now();
+  if(d.type==='hello')send();
+  if(d.type==='vtime'&&vmode){vt={t:d.t,playing:d.playing,at:performance.now()}}
+  if(d.type==='video'){videoOn=d.on;
+    if(d.on){vmode=true;vt={t:0,playing:true,at:performance.now()};recalc();if(ph<=1){ph=1;base=0;t0=performance.now();curIdx=-1}playing=true;$('pp').textContent='❚❚ 정지';send()}
+    else{vmode=false;vt=null;recalc();if(d.next&&ph===1){goPhase(2,0);if(!playing)setPlay(true)}else if(ph===1)seek(0)}}}
+if(bc)bc.onmessage=e=>hear(e.data);
+addEventListener('message',e=>hear(e.data));
+tell({type:'ping'});
+
+// ───────── 그리기 ─────────
+function draw(){if(playing&&ph===PH.length-1&&now()>=dur(ph)){base=dur(ph);setPlay(false)}
+  const t=now(),P=PH[ph],left=dur(ph)-t,g=offs[ph]+t;
+  $('cl').textContent=fmt(g);$('cls').textContent='/ '+fmt(offs[ph]+dur(ph))+' · '+P.name+(vOn()?' (백업 영상)':'');$('clk').classList.toggle('over',left<0);
+  $('rem').textContent=left>=0?'−'+fmt(left):'초과 '+fmt(-left).replace('+','');$('kvrem').className='kv'+(left<0?' over':left<30?' warn':'');
+  $('all').textContent=fmt(g)+' / '+fmt(PLAN);
+  const sl=curSlide();$('scr').textContent=(videoOn?'▶ 백업 영상 · ':'')+'장표 '+sl+' · '+SLIDES[sl];
+  const d=new Date();$('wall').textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+  const end=new Date(Date.now()+(PLAN-g)*1000);$('eta').textContent=playing?end.getHours()+':'+String(end.getMinutes()).padStart(2,'0'):'–';
+  PH.forEach((p,i)=>{p.el.className='step'+(i===ph?' on':'')+(i<ph?' done':'')+(i===ph&&left<0?' over':'');p.el.querySelector('i').style.width=(i<ph?100:i===ph?Math.min(100,t/dur(i)*100):0)+'%'});
+  $('pb').style.width=Math.min(100,g/PLAN*100)+'%';
+  let ci=-1;lines.forEach((l,i)=>{if(l.ph===ph&&act(l)&&l.s<=t)ci=i});if(ci<0)ci=lines.findIndex(l=>l.ph===ph&&act(l));
+  const nl=lines.find((l,i)=>i>ci&&l.ph===ph&&act(l));$('nxt').textContent=nl?fmt(nl.s-t):'–';
+  lines.forEach((l,i)=>{const c=i===ci,p=l.ph<ph||(l.ph===ph&&i<ci);l.el.classList.toggle('cur',c);l.el.classList.toggle('past',p);l.el.classList.toggle('off',!act(l));
+    if(c)l.ws.forEach(k=>k.el.style.setProperty('--f',(t<=k.s?0:t>=k.e?100:(t-k.s)/(k.e-k.s)*100)+'%'))});
+  if(ci!==curIdx){curIdx=ci;if(auto&&lines[ci]){const r=lines[ci].el.getBoundingClientRect();scrollTo({top:scrollY+r.top-innerHeight*.3,behavior:'smooth'})}}
+  const ok=alive();$('lk').textContent=ok?'연결됨 ✓':'연결 안 됨';$('link').classList.toggle('ok',!!ok);
+  requestAnimationFrame(draw)}
+draw();
+</script>
+</body>
+</html>
