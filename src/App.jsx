@@ -10,6 +10,7 @@ const lsGet = (k) => { try { return localStorage.getItem(k); } catch { return nu
 
 // 구식 edu[]/proj[] 텍스트를 역량 개발(activities)로 병합 — 중복은 제외
 const R177_PORTFOLIO = "https://tjsnpark-stack.github.io/portfolio/";
+const R177_GITHUB = "https://github.com/tjsnpark-stack";
 function migrateEmp(e) {
   const acts = [...(e.activities || [])];
   const has = (title) => acts.some((a) => a.title === title);
@@ -18,7 +19,9 @@ function migrateEmp(e) {
   const email = e.id === "R177" ? "tjsn0610@solideos.com" : e.email;
   // 박선우 포트폴리오: 예전 자리표시 링크(behance)를 실제 포트폴리오 주소로 — 이미 저장된 데이터에도 적용
   const portfolio = e.id === "R177"
-    ? (e.portfolio || []).map((p) => (p.kind === "link" && /behance\.net/.test(p.url || "") ? { ...p, title: "박선우 포트폴리오", url: R177_PORTFOLIO } : p))
+    ? (e.portfolio || []).map((p) => (p.kind !== "link" ? p
+      : /behance\.net/.test(p.url || "") ? { ...p, title: "박선우 포트폴리오", url: R177_PORTFOLIO }
+      : /^https:\/\/github\.com\/?$/.test(p.url || "") ? { ...p, url: R177_GITHUB } : p))
     : e.portfolio;
   // 이전 버전에서 중복 저장된 스킬 정리 — 남아 있으면 목록 렌더 시 React key가 충돌한다
   return { ...e, activities: acts, email, portfolio, skills: dedupeBy(e.skills || [], (s) => s[0]) };
