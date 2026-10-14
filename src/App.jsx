@@ -46,6 +46,22 @@ function addLinkSeed(e) {
   (LINK_ACTS[e.id] || []).forEach((a) => { if (!acts.some((x) => x.title === a.title)) acts.push(a); });
   return { ...e, skills, activities: acts };
 }
+// 시연 팀(중부지사) 역량 시드 — 시연 시나리오("연계 작업" 매칭)에 맞춘 가상 데이터. 이미 저장된 데이터에도 없으면 추가(있으면 그대로 둠)
+const DEMO_TEAM = {
+  R185: { skills: [["전자정부", 4, "도메인", "프로젝트검증"], ["시스템 연계", 5, "백엔드", "프로젝트검증"], ["Java", 3, "백엔드", "자동추출"]],
+    acts: [{ type: "프로젝트", title: "중부권 행정정보 연계 구축", date: "2025-10", skills: ["시스템 연계", "전자정부"], desc: "지자체 행정정보 공동이용 연계 모듈 구축." }] },
+  R189: { skills: [["전자정부", 5, "도메인", "프로젝트검증"], ["시스템 연계", 4, "백엔드", "자동추출"]] },
+  R177: { skills: [["전자정부", 4, "도메인", "자동추출"], ["시스템 연계", 5, "백엔드", "프로젝트검증"]] },
+};
+function addDemoTeam(e) {
+  const d = DEMO_TEAM[e.id];
+  if (!d) return e;
+  const skills = [...e.skills];
+  d.skills.forEach((s) => { if (!skills.some((x) => skEq(x[0], s[0]))) skills.push([...s]); });
+  const acts = [...(e.activities || [])];
+  (d.acts || []).forEach((a) => { if (!acts.some((x) => x.title === a.title)) acts.push(a); });
+  return { ...e, skills, activities: acts };
+}
 function fixExecSkills(e) {
   const f = EXEC_FIX[e.id];
   if (!f || !e.skills.some((s) => f.drop.includes(s[0]) && s[1] === 5 && s[3] === "프로젝트검증")) return e;
@@ -58,9 +74,9 @@ function loadEmps() {
     const raw = localStorage.getItem(STORAGE_KEY);
     const base = raw ? JSON.parse(raw) : SEED;
     const list = Array.isArray(base) && base.length ? base : SEED;
-    return list.map(migrateEmp).map(fixExecSkills).map(addLinkSeed);
+    return list.map(migrateEmp).map(fixExecSkills).map(addLinkSeed).map(addDemoTeam);
   } catch {
-    return SEED.map(migrateEmp);
+    return SEED.map(migrateEmp).map(addDemoTeam);
   }
 }
 
@@ -83,7 +99,7 @@ const ACT_SRC = { 프로젝트: "프로젝트검증", 자격증: "프로젝트�
 const SRC_RANK = { 자기평가: 1, 자동추출: 2, 프로젝트검증: 3 };
 
 // 관리자·PM 계정 (데모). localStorage 데이터에 의존하지 않도록 코드에 고정.
-const MANAGER_IDS = ["R131"]; // 김철 사장 = admin 계정
+const MANAGER_IDS = ["R176"]; // 우덕성 팀장(중부지사) = admin 계정
 const isMgr = (e) => !!e && MANAGER_IDS.includes(e.id);
 
 // 좌측 사이드바 메뉴 (mgr:true = 관리자 전용)
@@ -1851,7 +1867,7 @@ ${requirement}`;
                 : "비밀번호 재설정은 관리자(IT 운영팀)에게 문의하세요. (데모 계정은 아래 참고)"}</div>}
               <div className="democreds">
                 <div className="democ-h">데모 계정</div>
-                <div><b>관리자·PM</b> — <code>admin</code> / <code>admin1234</code> (김철 사장)</div>
+                <div><b>관리자·PM</b> — <code>admin</code> / <code>admin1234</code> (우덕성 팀장)</div>
                 <div><b>직원</b> — 직원 ID <code>r177</code>(박선우)·<code>r175</code>(윤승미) 등 / <code>1234</code></div>
                 <button type="button" className="demoreset" onClick={() => setConfirmDel({ kind: "reset" })}>🔄 데모 데이터 초기화</button>
               </div>
