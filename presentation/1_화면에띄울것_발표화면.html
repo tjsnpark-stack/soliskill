@@ -118,13 +118,15 @@ h1 em{font-style:normal;color:var(--p)}
 .loop b{color:var(--p)}
 
 /* ── 05 features ── */
-.feat{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:24px;margin-top:46px;flex:1}
-.feat .card{padding:32px 34px;display:flex;flex-direction:column}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.feat .card{padding:40px 38px;display:flex;gap:26px;align-items:flex-start}
+.feat .ic{flex:none;width:76px;height:76px;border-radius:20px;background:var(--p-soft);display:grid;place-items:center;font-size:38px}
+.feat .card.key .ic{background:#3A1522}
 .feat .card .h{display:flex;align-items:baseline;justify-content:space-between}
-.feat h3{font-size:34px}
+.feat h3{font-size:36px}
 .feat .c{font-size:48px;font-weight:800;color:var(--p);font-variant-numeric:tabular-nums}
 .feat .c small{font-size:22px;margin-left:2px}
-.feat p{font-size:22px;color:var(--ink2);line-height:1.6;margin-top:12px}
+.feat p{font-size:24px;color:var(--ink2);line-height:1.6;margin-top:12px}
 .feat .card.key{background:var(--ink);color:#fff;border-color:var(--ink)}
 .feat .card.key p{color:#C6D2E2}.feat .card.key .c{color:#FF6F9C}
 .feat .card.key .star{display:inline-block;background:var(--p);color:#fff;font-size:18px;border-radius:8px;padding:3px 10px;margin-left:10px;vertical-align:middle}
@@ -308,12 +310,12 @@ body.linked #start{display:none}
   <div class="top"><img src="자료/img/solideo-logo.png" alt=""><span class="brand">SoliSkill</span>·<span class="tag">기능 한눈에</span></div>
   <h1 data-a style="--d:1">SoliSkill은 <em>여섯 가지 기능</em>으로 구성됩니다</h1>
   <div class="feat">
-    <div class="card key" data-a style="--d:2"><div class="h"><h3>AI 인력 매칭<span class="star">핵심</span></h3></div><p>문장으로 찾기 · 추천 이유 · 가용 배지<br>카드별 계산식 · 기준 공개·조정 · 익명 ID</p></div>
-    <div class="card" data-a style="--d:3"><div class="h"><h3>배치 · 운영</h3></div><p>원클릭 프로젝트 생성 · 조합 평가<br>단일 의존 경고 · 칸반 5단계 · 자동 성장</p></div>
-    <div class="card" data-a style="--d:4"><div class="h"><h3>조직도</h3></div><p>실제 조직 트리(정직원 · 협력 인력 포함)<br>가용·투입·풀로드 상태 · 검색</p></div>
-    <div class="card" data-a style="--d:5"><div class="h"><h3>조직 역량</h3></div><p>분야·강점 분포 · 인사이트 한 줄<br>부서 필터 · 이력서 자동 채우기</p></div>
-    <div class="card" data-a style="--d:6"><div class="h"><h3>마이페이지</h3></div><p>숙련도와 근거 · 포트폴리오<br>역량 개발 기록 · 공개 스위치</p></div>
-    <div class="card" data-a style="--d:7"><div class="h"><h3>로그인 · 권한</h3></div><p>역할별 로그인 · 직원은 본인만<br>관리자 전용 기능 · 다크 모드</p></div>
+    <div class="card key" data-a style="--d:2"><div class="ic">🤖</div><div><div class="h"><h3>AI 인력 매칭<span class="star">핵심</span></h3></div><p>문장으로 찾기 · 추천 이유 · 가용 배지<br>계산식 공개 · 기준 조정 · 익명 ID</p></div></div>
+    <div class="card" data-a style="--d:3"><div class="ic">📋</div><div><div class="h"><h3>배치 · 운영</h3></div><p>원클릭 프로젝트 생성 · 조합 평가<br>단일 의존 경고 · 칸반 5단계 · 자동 성장</p></div></div>
+    <div class="card" data-a style="--d:4"><div class="ic">🧭</div><div><div class="h"><h3>조직도</h3></div><p>실제 조직 트리(정직원 · 협력 인력 포함)<br>가용·투입·풀로드 상태 · 검색</p></div></div>
+    <div class="card" data-a style="--d:5"><div class="ic">📊</div><div><div class="h"><h3>조직 역량</h3></div><p>분야·강점 분포 · 인사이트 한 줄<br>부서 필터 · 이력서 자동 채우기</p></div></div>
+    <div class="card" data-a style="--d:6"><div class="ic">👤</div><div><div class="h"><h3>마이페이지</h3></div><p>숙련도와 근거 · 포트폴리오<br>역량 개발 기록 · 공개 스위치</p></div></div>
+    <div class="card" data-a style="--d:7"><div class="ic">🔐</div><div><div class="h"><h3>로그인 · 권한</h3></div><p>역할별 로그인 · 직원은 본인만<br>관리자 전용 기능 · 다크 모드</p></div></div>
   </div>
   <div class="num">05</div>
 </section>
