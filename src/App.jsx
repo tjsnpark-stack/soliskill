@@ -961,9 +961,10 @@ ${requirement}`;
     handleFile(f);
   }
 
+  const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v || "").trim()); // 이메일 필수 + 기본 형식
   function saveDraft() {
     const d = draft;
-    if (!d.name.trim()) { return; }
+    if (!d.name.trim() || !emailOk(d.email)) { return; } // 이름·이메일 필수
     const existing = d.id ? emps.find((e) => e.id === d.id) : null;
     // 소속(site·group)은 폼에 없다. 선택한 팀의 기존 동료에게서 물려받고, 없으면 원래 값을 유지한다.
     // 이 두 값이 비면 조직역량 필터에서 "기타"로 빠지고 보드 지사 판정도 어긋난다.
@@ -1347,6 +1348,7 @@ ${requirement}`;
         .reqsec { margin-bottom:13px; }
         .reqlabel { font-size:12.5px; font-weight:700; color:var(--muted); margin-bottom:7px; }
         .reqopt { font-weight:600; color:var(--muted); }
+        .reqmark { font-weight:700; color:var(--primary); font-size:12px; }
         .reqtags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
         .reqtag { font-size:12.5px; font-weight:700; color:#fff; background:var(--primary); border-radius:20px; padding:5px 11px; cursor:pointer; }
         .reqtag b { font-weight:800; opacity:.8; }
@@ -2535,7 +2537,7 @@ ${requirement}`;
               <div className="field"><label>직급</label><input value={draft.rank} onChange={(e) => upd({ rank: e.target.value })} placeholder="선임" /></div>
             </div>
             <div className="grid2">
-              <div className="field"><label>이메일</label><input value={draft.email} onChange={(e) => upd({ email: e.target.value })} placeholder="(비우면 직원ID@solideo.co.kr)" /></div>
+              <div className="field"><label>이메일 <span className="reqmark">(필수)</span></label><input type="email" value={draft.email} onChange={(e) => upd({ email: e.target.value })} placeholder="예: hong@solideo.co.kr" /></div>
               <div className="field"><label>연락처</label><input value={draft.phone} onChange={(e) => upd({ phone: e.target.value })} placeholder="내선 1234 / 010-..." /></div>
             </div>
             <div className="field"><label>팀</label>
@@ -2571,7 +2573,7 @@ ${requirement}`;
               {draft.id && isManager && <button className="danger" onClick={() => setConfirmDel({ kind: "emp", id: draft.id, title: draft.name })}>삭제</button>}
               <span className="spacer" />
               <button onClick={() => setDraft(null)}>취소</button>
-              <button className="primary" onClick={saveDraft} disabled={!draft.name.trim()}>저장</button>
+              <button className="primary" onClick={saveDraft} disabled={!draft.name.trim() || !emailOk(draft.email)}>저장</button>
             </div>
           </div>
         </div>
