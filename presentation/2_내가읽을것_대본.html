@@ -261,14 +261,19 @@ let scr=null,videoOn=false,lastAlive=-1e9;
 const bc=('BroadcastChannel' in window)?new BroadcastChannel('soliskill-talk'):null,seen=new Set();
 const SCHED=lines.map(l=>[l.ph,l.s,l.slide-1]);
 function curSlide(){const t=now();let s=PH[ph]&&lines.find(l=>l.ph===ph).slide;lines.forEach(l=>{if(l.ph===ph&&l.s<=t)s=l.slide});return s}
-function tell(m){m.src='soliskill-script';m.id=Math.random().toString(36).slice(2);if(bc)bc.postMessage(m);if(scr&&!scr.closed)try{scr.postMessage(m,'*')}catch(e){}}
+// 대본 창이 여러 개 열리면 가장 나중에 연(또는 다시 연결한) 창만 발표 화면을 조종한다. 나머지는 스스로 물러난다.
+let BORN=Date.now(),retired=false;const SID=BORN.toString(36)+Math.random().toString(36).slice(2,6);
+function retire(){if(retired)return;retired=true;let b=document.getElementById('retired');if(!b){b=document.createElement('div');b.id='retired';b.style.cssText='position:fixed;left:0;right:0;top:0;z-index:9999;background:#C4164D;color:#fff;font:700 16px/1.5 Pretendard,sans-serif;padding:12px 20px;display:flex;gap:14px;align-items:center;justify-content:center';b.innerHTML='다른 대본 창이 열려서 이 창은 발표 화면 연결을 넘겼습니다. 이 창은 닫아도 됩니다.<button style="font:700 14px Pretendard,sans-serif;padding:6px 12px;border:0;border-radius:8px;cursor:pointer">이 창으로 다시 연결</button>';b.querySelector('button').onclick=reclaim;document.body.appendChild(b)}b.style.display='flex'}
+function reclaim(){BORN=Date.now();retired=false;const b=document.getElementById('retired');if(b)b.style.display='none';tell({type:'ping'});send()}
+function tell(m){if(retired)return;m.sid=SID;m.born=BORN;m.src='soliskill-script';m.id=Math.random().toString(36).slice(2);if(bc)bc.postMessage(m);if(scr&&!scr.closed)try{scr.postMessage(m,'*')}catch(e){}}
 function send(){tell({type:'state',ph,t:now(),playing,off:offs[ph],name:PH[ph].name,sched:SCHED})}
 setInterval(send,500);
 const alive=()=>performance.now()-lastAlive<3000;
 $('op').onclick=()=>{if(alive()&&!confirm('이미 연결된 발표 화면이 있습니다. 하나 더 열까요?'))return;
   scr=window.open('1_화면에띄울것_발표화면.html','soliskill_screen','width=1280,height=720');if(!scr)alert('팝업이 차단되었습니다. 주소창 오른쪽에서 팝업을 허용해 주세요.');setTimeout(send,600)};
 $('vb').onclick=()=>{if(!alive()){alert('발표 화면이 연결되어 있지 않습니다. [발표 화면 열기]를 눌러 주세요.');return}if(ph===0)goPhase(1,0);tell({type:'cmd',video:'play'})};
-function hear(d){if(!d||d.src!=='soliskill-screen'||seen.has(d.id))return;seen.add(d.id);if(seen.size>500)seen.clear();
+function hear(d){if(d&&d.src==='soliskill-script'&&d.sid!==SID){if(!retired&&d.born>BORN)retire();return}
+  if(!d||d.src!=='soliskill-screen'||seen.has(d.id))return;seen.add(d.id);if(seen.size>500)seen.clear();
   lastAlive=performance.now();
   if(d.type==='hello')send();
   if(d.type==='vtime'&&vmode){vt={t:d.t,playing:d.playing,at:performance.now()}}

@@ -555,7 +555,12 @@ stage.addEventListener('click',()=>{if(cur===DEMO&&!vwrap.classList.contains('on
 const bc=('BroadcastChannel' in window)?new BroadcastChannel('soliskill-talk'):null;
 const seen=new Set();
 function tell(m){m.src='soliskill-screen';m.id=Math.random().toString(36).slice(2);if(bc)bc.postMessage(m);if(opener)try{opener.postMessage(m,'*')}catch(e){}}
+let owner=null,ownerAt=-1e9;
 function hear(d){if(!d||d.src!=='soliskill-script'||seen.has(d.id))return;seen.add(d.id);if(seen.size>500)seen.clear();
+  // 대본 창이 여럿이면 가장 나중에 연 창만 따른다(예전 대본은 born이 없음). 따르던 창이 4초 넘게 조용하면 다른 창을 받는다.
+  if(d.type==='state'||d.type==='cmd'){const b=d.born||0,quiet=performance.now()-ownerAt>4000;
+    if(owner&&d.sid!==owner.sid&&!quiet&&b<=owner.born)return;
+    if(!owner||d.sid!==owner.sid)owner={sid:d.sid,born:b};ownerAt=performance.now()}
   if(d.type==='state'){
     if(!linked){linked=true;document.body.classList.add('linked');setPlay(false);$('pause').style.display='none';$('start').style.display='none'}
     rs={...d,at:performance.now()}}
