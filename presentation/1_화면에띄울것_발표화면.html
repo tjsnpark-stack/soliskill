@@ -21,7 +21,7 @@ body{font-family:Pretendard,"Malgun Gothic",sans-serif;color:var(--ink);letter-s
 #stage{position:relative;width:1920px;height:1080px;background:var(--bg);overflow:hidden}
 
 /* ── slide base ── */
-.s{position:absolute;inset:0;padding:150px 120px 110px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+.s{position:absolute;inset:0;padding:150px 120px 110px;display:flex;flex-direction:column;justify-content:center;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
 .s.on{opacity:1;visibility:visible;transition:opacity .5s ease}
 .s.dark{background:var(--dark);color:#fff}
 .s.red{background:var(--p);color:#fff}
@@ -130,7 +130,7 @@ h1 em{font-style:normal;color:var(--p)}
 .feat .card.key .star{display:inline-block;background:var(--p);color:#fff;font-size:18px;border-radius:8px;padding:3px 10px;margin-left:10px;vertical-align:middle}
 
 /* ── 06 match ── */
-.two{display:grid;grid-template-columns:690px 1fr;gap:60px;margin-top:40px;flex:1;align-items:start}
+.two{display:grid;grid-template-columns:690px 1fr;gap:60px;margin-top:40px;align-items:start}
 .qbox{background:#fff;border:2px solid var(--line);border-radius:22px;padding:28px 30px}
 .qbox .lb{font-size:19px;font-weight:800;color:var(--mute);margin-bottom:12px}
 .qbox .cp{display:inline-block;background:var(--p);color:#fff;font-weight:800;border-radius:999px;padding:6px 18px;font-size:22px}
@@ -160,7 +160,7 @@ h1 em{font-style:normal;color:var(--p)}
 .band b{background:var(--p);color:#fff;border-radius:10px;padding:4px 12px;font-size:21px;flex:none}
 
 /* ── 08/10/11 shots ── */
-.sx{display:grid;grid-template-columns:1fr 1060px;gap:56px;margin-top:-20px;align-items:start}
+.sx{display:grid;grid-template-columns:1fr 1060px;gap:56px;align-items:center}
 .legend{display:flex;flex-direction:column;gap:18px;margin-top:34px}
 .legend div{display:flex;align-items:center;gap:18px;font-size:28px;font-weight:700}
 .legend i{width:22px;height:22px;border-radius:50%;flex:none}
@@ -198,7 +198,7 @@ h1 em{font-style:normal;color:var(--p)}
 #s13 .scen div{background:var(--dark2);border:1px solid #2A3546;border-radius:22px;padding:30px 34px;font-size:23px;color:#94A3B8;line-height:1.6}
 #s13 .scen b{display:block;color:#fff;font-size:34px;margin:4px 0 8px}
 #s13 .scen em{font-style:normal;color:#FF6F9C;font-weight:800}
-#s13 .hint{margin-top:auto;font-size:24px;color:#64748B}
+#s13 .hint{position:absolute;left:120px;bottom:90px;font-size:24px;color:#64748B}
 #s13 .hint b{color:#C6D2E2}
 
 /* ── 14 effect ── */
