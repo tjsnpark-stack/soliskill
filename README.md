@@ -95,7 +95,7 @@ npm run dev   # http://localhost:5173
 ```
 skillmap/
 ├─ public/
-│  ├─ favicon.svg              # 솔리데오 브랜드 파비콘
+│  ├─ favicon-solideo.png      # 솔리데오 브랜드 파비콘
 │  ├─ solideo-logo.png         # 컬러 CI (사이드바)
 │  └─ solideo-logo-white.png   # 흰색 CI (로그인 패널)
 ├─ src/
